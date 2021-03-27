@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717826319890",
+    "project_id": "moza-87f2e",
+    "storage_bucket": "moza-87f2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717826319890:android:7df4c7e6cf0628b053dacb",
+        "android_client_info": {
+          "package_name": "com.mozadevelopment.moza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717826319890-npgiijb7m5eq1gbh0unf8lq1cmkjqd0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPXHQvsIwwu3Csovq5XDpt-rH4oVWsB1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717826319890-npgiijb7m5eq1gbh0unf8lq1cmkjqd0c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
