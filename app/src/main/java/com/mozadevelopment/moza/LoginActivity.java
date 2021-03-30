@@ -46,27 +46,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void userLogin(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String emailNeeded = getString(R.string.emailNeeded);
+        String emailValid = getString(R.string.emailValid);
+        String passwordValid = getString(R.string.passwordValid);
+        String passwordNeeded = getString(R.string.passwordNeeded);
+        String userNotFound = getString(R.string.userNotFound);
 
         if (email.isEmpty()){
-            editTextEmail.setError("Se requiere un email.");
+            editTextEmail.setError(emailNeeded);
             editTextEmail.requestFocus();
             return;
         }
 
         if (password.isEmpty()){
-            editTextPassword.setError("Se requiere una contraseña.");
+            editTextPassword.setError(emailValid);
             editTextPassword.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError("Ingresa un email válido.");
+            editTextEmail.setError(passwordNeeded);
             editTextEmail.requestFocus();
             return;
         }
 
         if (password.length()<6) {
-            editTextPassword.setError("Ingrese una contraseña mayor a 6 caracteres.");
+            editTextPassword.setError(passwordValid);
             editTextPassword.requestFocus();
             return;
         }
@@ -82,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Usuario no registrado o Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), userNotFound, Toast.LENGTH_SHORT).show();
                 }
             }
         });

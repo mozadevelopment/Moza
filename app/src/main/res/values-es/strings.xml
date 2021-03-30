@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moza</string>
+    <string name="password">Contraseña</string>
+    <string name="email">Email</string>
+    <string name="i_have_an_account">Tengo una cuenta.</string>
+    <string name="register">Registrarme</string>
+    <string name="name">Nombre</string>
+    <string name="i_do_not_have_an_account">No tengo una cuenta.</string>
+    <string name="login">Ingresar</string>
+    <string name="forgot_password">Olvidé mi contraseña</string>
+    <string name="passwordNeeded">Se requiere una contraseña.</string>
+    <string name="emailNeeded">Se requiere un email.</string>
+    <string name="emailValid">Ingresa un email válido.</string>
+    <string name="passwordValid">Ingrese una contraseña mayor a 6 caracteres.</string>
+    <string name="userNotFound">Usuario no registrado o contraseña incorrecta</string>
+</resources>
