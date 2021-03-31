@@ -22,4 +22,5 @@
     <string name="errorEmailToast">Hubo un error enviando email.</string>
     <string name="nameNeededToast">Ingrese su nombre</string>
     <string name="phone">Telefono</string>
+    <string name="alreadyRegisteredErrorToast">Ya tienes una cuenta con este email.</string>
 </resources>

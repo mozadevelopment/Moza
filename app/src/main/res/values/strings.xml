@@ -20,5 +20,6 @@
     <string name="emailNotRegisteredToast">Please input your registered email.</string>
     <string name="sentEmailToast">Sent email to reset your password.</string>
     <string name="errorEmailToast">There was an error in sending the email.</string>
+    <string name="alreadyRegisteredErrorToast">You already have an account.</string>
     <string name="phone">Phone</string>
 </resources>

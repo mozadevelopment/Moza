@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String passwordValidToast = getString(R.string.passwordValidToast);
         String passwordNeededToast = getString(R.string.passwordNeededToast);
         String nameNeededToast = getString(R.string.nameNeededToast);
+        String alreadyRegisteredErrorToast = getString(R.string.alreadyRegisteredErrorToast);
 
         if (email.isEmpty()){
             editTextEmail.setError(emailNeededToast);
@@ -82,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             } else {
 
                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                    Toast.makeText(getApplicationContext(), "Ya estas registrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), alreadyRegisteredErrorToast, Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
