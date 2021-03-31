@@ -9,6 +9,7 @@
     <string name="i_have_an_account">I have an account</string>
     <string name="register">Register</string>
     <string name="emailNeededToast">An email is needed</string>
+    <string name="nameNeededToast">Please input your name.</string>
     <string name="passwordNeededToast">A password is needed</string>
     <string name="emailValidToast">Please input a valid email</string>
     <string name="passwordValidToast">Your password needs to be longer</string>
@@ -19,4 +20,5 @@
     <string name="emailNotRegisteredToast">Please input your registered email.</string>
     <string name="sentEmailToast">Sent email to reset your password.</string>
     <string name="errorEmailToast">There was an error in sending the email.</string>
+    <string name="phone">Phone</string>
 </resources>

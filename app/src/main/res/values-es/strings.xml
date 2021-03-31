@@ -20,4 +20,6 @@
     <string name="emailNotRegisteredToast">Por favor, ingrese su email registrado.</string>
     <string name="sentEmailToast">Se envio un email para recuperar su contraseña/</string>
     <string name="errorEmailToast">Hubo un error enviando email.</string>
+    <string name="nameNeededToast">Ingrese su nombre</string>
+    <string name="phone">Telefono</string>
 </resources>
