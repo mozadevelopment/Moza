@@ -9,9 +9,15 @@
     <string name="i_do_not_have_an_account">No tengo una cuenta.</string>
     <string name="login">Ingresar</string>
     <string name="forgot_password">Olvidé mi contraseña</string>
-    <string name="passwordNeeded">Se requiere una contraseña.</string>
-    <string name="emailNeeded">Se requiere un email.</string>
-    <string name="emailValid">Ingresa un email válido.</string>
-    <string name="passwordValid">Ingrese una contraseña mayor a 6 caracteres.</string>
-    <string name="userNotFound">Usuario no registrado o contraseña incorrecta</string>
+    <string name="reset_password">Recuperar contraseña</string>
+    <string name="forgot_password_text_view">Olvidaste tu contraseña?</string>
+    <string name="forgot_password_description_text_view">Necesitamos tu email para enviarte un link para recuperar tu contraseña.</string>
+    <string name="emailNeededToast">Se requiere un email.</string>
+    <string name="passwordNeededToast">Se requiere una contraseña.</string>
+    <string name="emailValidToast">Ingresa un email válido.</string>
+    <string name="passwordValidToast">Ingrese una contraseña mayor a 6 caracteres.</string>
+    <string name="userNotFoundToast">Usuario no registrado o contraseña incorrecta</string>
+    <string name="emailNotRegisteredToast">Por favor, ingrese su email registrado.</string>
+    <string name="sentEmailToast">Se envio un email para recuperar su contraseña/</string>
+    <string name="errorEmailToast">Hubo un error enviando email.</string>
 </resources>

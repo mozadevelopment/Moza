@@ -46,11 +46,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void userLogin(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String emailNeeded = getString(R.string.emailNeeded);
-        String emailValid = getString(R.string.emailValid);
-        String passwordValid = getString(R.string.passwordValid);
-        String passwordNeeded = getString(R.string.passwordNeeded);
-        String userNotFound = getString(R.string.userNotFound);
+        String emailNeeded = getString(R.string.emailNeededToast);
+        String emailValid = getString(R.string.emailValidToast);
+        String passwordValid = getString(R.string.passwordValidToast);
+        String passwordNeeded = getString(R.string.passwordNeededToast);
+        String userNotFound = getString(R.string.userNotFoundToast);
 
         if (email.isEmpty()){
             editTextEmail.setError(emailNeeded);
