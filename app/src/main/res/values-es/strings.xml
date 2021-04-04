@@ -19,8 +19,10 @@
     <string name="userNotFoundToast">Usuario no registrado o contraseña incorrecta</string>
     <string name="emailNotRegisteredToast">Por favor, ingrese su email registrado.</string>
     <string name="sentEmailToast">Se envio un email para recuperar su contraseña/</string>
-    <string name="errorEmailToast">Hubo un error enviando email.</string>
+    <string name="errorEmailToast">Hubo un error enviando el email.</string>
     <string name="nameNeededToast">Ingrese su nombre</string>
     <string name="phone">Telefono</string>
     <string name="alreadyRegisteredErrorToast">Ya tienes una cuenta con este email.</string>
+    <string name="phoneInvalidToast">Ingrese un número de teléfono válido.</string>
+    <string name="phoneNeededToast">Se requiere un numero de telefono</string>
 </resources>
