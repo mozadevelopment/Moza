@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = findViewById(R.id.edit_text_password);
         forgotPassword = findViewById(R.id.text_view_forgot_password);
 
-        findViewById(R.id.text_view_register).setOnClickListener(this);
+        findViewById(R.id.button_register).setOnClickListener(this);
         findViewById(R.id.button_login).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.text_view_register:
+            case R.id.button_register:
                 finish();
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
