@@ -24,4 +24,6 @@
     <string name="alreadyRegisteredErrorToast">You already have an account.</string>
     <string name="phone">Phone</string>
     <string name="phoneInvalidToast">Input a valid phone number.</string>
+    <string name="make_an_order">Make an order</string>
+    <string name="qr">QR</string>
 </resources>

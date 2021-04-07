@@ -25,4 +25,6 @@
     <string name="alreadyRegisteredErrorToast">Ya tienes una cuenta con este email.</string>
     <string name="phoneInvalidToast">Ingrese un número de teléfono válido.</string>
     <string name="phoneNeededToast">Se requiere un numero de telefono</string>
+    <string name="make_an_order">Realizar pedido</string>
+    <string name="qr">qr</string>
 </resources>
