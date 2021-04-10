@@ -13,10 +13,14 @@
         android:theme="@style/Theme.Moza"
         android:hardwareAccelerated="true">
 
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".RegisterActivity"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name=".ForgotPasswordActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
