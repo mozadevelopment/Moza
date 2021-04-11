@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Moza</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
@@ -26,4 +26,7 @@
     <string name="phoneInvalidToast">Input a valid phone number.</string>
     <string name="make_an_order">Make an order</string>
     <string name="qr">QR</string>
+    <string name="textViewQr">Scan canceled</string>
+    <string name="textViewQrFail">QR scan failed</string>
+    <string name="integratorPrompt">Scan QR code</string>
 </resources>
