@@ -30,4 +30,5 @@
     <string name="textViewQr">Escaneo cancelado</string>
     <string name="textViewQrFail">Error al escanear el código QR</string>
     <string name="integratorPrompt">Escanear código QR</string>
+    <string name="log_out">Cerrar Sesión</string>
 </resources>

@@ -29,4 +29,5 @@
     <string name="textViewQr">Scan canceled</string>
     <string name="textViewQrFail">QR scan failed</string>
     <string name="integratorPrompt">Scan QR code</string>
+    <string name="log_out">Log out</string>
 </resources>
