@@ -1,10 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Moza</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="forgot_password">Forgot password</string>
     <string name="login">Login</string>
-    <string name="i_do_not_have_an_account">I do not have an account.</string>
     <string name="name">Name</string>
     <string name="i_have_an_account">I have an account</string>
     <string name="register">Register</string>
@@ -13,7 +12,7 @@
     <string name="nameNeededToast">Please input your name.</string>
     <string name="passwordNeededToast">A password is needed</string>
     <string name="emailValidToast">Please input a valid email</string>
-    <string name="passwordValidToast">Your password needs to be longer</string>
+    <string name="passwordValidToast">Your password needs to be at least 6 characters long and no whitespaces are allowed.</string>
     <string name="userNotFoundToast">User not registered or wrong password.</string>
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password_text_view">Forgot password?</string>
@@ -24,7 +23,7 @@
     <string name="alreadyRegisteredErrorToast">You already have an account.</string>
     <string name="phone">Phone</string>
     <string name="phoneInvalidToast">Input a valid phone number.</string>
-    <string name="make_an_order">Make an order</string>
+    <string name="make_an_order">MAKE AN ORDER</string>
     <string name="qr">QR</string>
     <string name="textViewQr">Scan canceled</string>
     <string name="textViewQrFail">QR scan failed</string>

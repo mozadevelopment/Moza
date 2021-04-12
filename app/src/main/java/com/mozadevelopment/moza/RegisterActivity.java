@@ -2,8 +2,8 @@ package com.mozadevelopment.moza;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -11,15 +11,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
+import com.mozadevelopment.moza.Database.UserHelperClass;
 
 import java.util.Objects;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText editTextEmail, editTextPassword, editTextName,editTextPhone;
+    String name, email, phone, phoneNumber, password;
     CountryCodePicker ccp;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+    private Button registerButton;
+    private FirebaseDatabase database;
+    private DatabaseReference mDatabase;
+    private static final String USERS = "Users";
+    private UserHelperClass user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,75 +41,38 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextPassword = findViewById(R.id.edit_text_password);
         ccp = findViewById(R.id.ccp);
         editTextPhone = findViewById(R.id.edit_text_phone);
+        registerButton = findViewById(R.id.button_register);
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference(USERS);
+        mAuth = FirebaseAuth.getInstance();
 
         ccp.registerCarrierNumberEditText(editTextPhone); //Unir codigo de pais con numero de telefono
 
-        findViewById(R.id.button_register).setOnClickListener(this);
-        findViewById(R.id.text_view_login).setOnClickListener(this);
+        registerButton.setOnClickListener(v -> {
+            if (!validateName() | !validateEmail() | !validatePassword() | !validatePhone()){
+                return;
+            } else {
+                name = editTextName.getText().toString();
+                email = editTextEmail.getText().toString();
+                phone = editTextPhone.getText().toString();
+                phoneNumber = ccp.getSelectedCountryCodeWithPlus() + phone; //Agregar codigo de pais al telefono
+                password = editTextPassword.getText().toString();
 
-        mAuth = FirebaseAuth.getInstance();
+                user = new UserHelperClass(name, email, phoneNumber, password);
+                registerUser();
+            }
+        });
+
     }
 
-    private void registerUser(){
-        String email = editTextEmail.getText().toString().trim();
-        String phone = editTextPhone.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String name = editTextName.getText().toString().trim();
-        String phoneNeededToast = getString(R.string.phoneNeededToast);
-        String emailValidToast = getString(R.string.emailValidToast);
-        String passwordValidToast = getString(R.string.passwordValidToast);
-        String passwordNeededToast = getString(R.string.passwordNeededToast);
-        String nameNeededToast = getString(R.string.nameNeededToast);
-        String alreadyRegisteredErrorToast = getString(R.string.alreadyRegisteredErrorToast);
-        String emailNeededToast = getString(R.string.emailNeededToast);
-        String phoneInvalidToast = getString(R.string.phoneInvalidToast);
+   public void registerUser(){
 
-        if (name.isEmpty()){
-            editTextName.setError(nameNeededToast);
-            editTextName.requestFocus();
-            return;
-        }
-
-        if (phone.isEmpty()){
-            editTextPhone.setError(phoneNeededToast);
-            editTextPhone.requestFocus();
-            return;
-        }
-
-        if (!ccp.isValidFullNumber()){
-            editTextPhone.setError(phoneInvalidToast);
-            editTextPhone.requestFocus();
-            return;
-        }
-
-        if (email.isEmpty()){
-            editTextEmail.setError(emailNeededToast);
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if (password.isEmpty()){
-            editTextPassword.setError(passwordNeededToast);
-            editTextPassword.requestFocus();
-            return;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError(emailValidToast);
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if (password.length()<6) {
-            editTextPassword.setError(passwordValidToast);
-            editTextPassword.requestFocus();
-            return;
-        }
+       String alreadyRegisteredErrorToast = getString(R.string.alreadyRegisteredErrorToast);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                finish();
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                FirebaseUser user = mAuth.getCurrentUser();
+                updateUI(user);
             } else {
                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                     Toast.makeText(getApplicationContext(), alreadyRegisteredErrorToast, Toast.LENGTH_SHORT).show();
@@ -110,17 +83,94 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
+    }
 
+    public void updateUI(FirebaseUser currentUser) {
+        String userId = mDatabase.push().getKey();
+        mDatabase.child(userId).setValue(user); //adding user info to database
+        Intent loginIntent = new Intent(this, MainActivity.class);
+
+        startActivity(loginIntent);
+    }
+
+
+    /* Funciones para validar datos */
+
+    private boolean validateName() {
+        String val = editTextName.getText().toString().trim();
+        String nameNeededToast = getString(R.string.nameNeededToast);
+
+        if (val.isEmpty()){
+            editTextName.setError(nameNeededToast);
+            return false;
+        } else {
+            editTextName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateEmail(){
+        String val = editTextEmail.getText().toString().trim();
+        String checkValidEmail = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$";
+        String emailValidToast = getString(R.string.emailValidToast);
+        String emailNeededToast = getString(R.string.emailNeededToast);
+
+        if (val.isEmpty()){
+            editTextEmail.setError(emailNeededToast);
+            return false;
+        } else if (!val.matches(checkValidEmail)) {
+            editTextEmail.setError(emailValidToast);
+            return false;
+        } else {
+            editTextEmail.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword(){
+        String val = editTextPassword.getText().toString().trim();
+        String checkValidPassword = "^" +
+                "(?=.*[0-9])" + //por lo menos un caracter
+                "(?=\\S+$)" + // sin espacios en blanco
+                ".{6,}" + //por lo menos 6 caracteres
+                "$";
+        String passwordValidToast = getString(R.string.passwordValidToast);
+        String passwordNeededToast = getString(R.string.passwordNeededToast);
+
+        if (val.isEmpty()){
+            editTextPassword.setError(passwordNeededToast);
+            return false;
+        } else if (!val.matches(checkValidPassword)) {
+            editTextPassword.setError(passwordValidToast);
+            return false;
+        } else {
+            editTextPassword.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePhone(){
+        String val = editTextPhone.getText().toString().trim();
+        String phoneNumber = ccp.getSelectedCountryCodeWithPlus() + val;
+        String phoneNeededToast = getString(R.string.phoneNeededToast);
+        String phoneInvalidToast = getString(R.string.phoneInvalidToast);
+
+        if (phoneNumber.isEmpty()){
+            editTextPhone.setError(phoneNeededToast);
+            return false;
+        } else if (!ccp.isValidFullNumber()){
+            editTextPhone.setError(phoneInvalidToast);
+            return false;
+        } else {
+            editTextPhone.setError(null);
+            return true;
+        }
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_register:
-                registerUser();
-                break;
-
             case R.id.text_view_login:
                 finish();
                 startActivity(new Intent(this, LoginActivity.class));
@@ -128,4 +178,3 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 }
-

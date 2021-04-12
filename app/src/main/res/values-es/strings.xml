@@ -6,7 +6,6 @@
     <string name="i_have_an_account">Tengo una cuenta.</string>
     <string name="register">Registrarme</string>
     <string name="name">Nombre</string>
-    <string name="i_do_not_have_an_account">No tengo una cuenta.</string>
     <string name="login">Ingresar</string>
     <string name="forgot_password">Olvidé mi contraseña</string>
     <string name="reset_password">Recuperar contraseña</string>
