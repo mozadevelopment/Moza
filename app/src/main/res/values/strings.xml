@@ -12,7 +12,7 @@
     <string name="nameNeededToast">Please input your name.</string>
     <string name="passwordNeededToast">A password is needed</string>
     <string name="emailValidToast">Please input a valid email</string>
-    <string name="passwordValidToast">Your password needs to be at least 6 characters long and no whitespaces are allowed.</string>
+    <string name="passwordValidToast">Your password needs to be at least 6 characters long, needs at least one number and no whitespaces are allowed.</string>
     <string name="userNotFoundToast">User not registered or wrong password.</string>
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password_text_view">Forgot password?</string>

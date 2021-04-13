@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 phoneNumber = ccp.getSelectedCountryCodeWithPlus() + phone; //Agregar codigo de pais al telefono
                 password = editTextPassword.getText().toString();
 
-                user = new UserHelperClass(name, email, phoneNumber, password);
+                user = new UserHelperClass(name, email, phoneNumber, password); //se usa los setters y getters de la clase de ayuda, y se asigna los valores a user
                 registerUser();
             }
         });
@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     public void updateUI(FirebaseUser currentUser) {
         String userId = mDatabase.push().getKey();
-        mDatabase.child(userId).setValue(user); //adding user info to database
+        mDatabase.child(userId).setValue(user); //Se agrega data de user a la bd
         Intent loginIntent = new Intent(this, MainActivity.class);
 
         startActivity(loginIntent);
