@@ -4,10 +4,15 @@ plugins {
 }
 
 repositories {
+    google()
     mavenCentral()
     maven {
         url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
     }
+
+
+
+
 }
 
 android {
@@ -51,6 +56,9 @@ dependencies {
     implementation 'com.hbb20:ccp:2.5.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
+    implementation "androidx.appcompat:appcompat:1.2.0"
 
 }
 

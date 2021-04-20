@@ -29,4 +29,10 @@
     <string name="textViewQrFail">QR scan failed</string>
     <string name="integratorPrompt">Scan QR code</string>
     <string name="log_out">Log out</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
+    <string name="my_orders">My orders</string>
+    <string name="home">Home</string>
 </resources>

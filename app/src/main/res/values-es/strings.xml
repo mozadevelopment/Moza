@@ -30,4 +30,8 @@
     <string name="textViewQrFail">Error al escanear el código QR</string>
     <string name="integratorPrompt">Escanear código QR</string>
     <string name="log_out">Cerrar Sesión</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="profile">Perfil</string>
+    <string name="my_orders">Mis pedidos</string>
+    <string name="home">Inicio</string>
 </resources>
