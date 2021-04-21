@@ -23,8 +23,8 @@
     <string name="alreadyRegisteredErrorToast">You already have an account.</string>
     <string name="phone">Phone</string>
     <string name="phoneInvalidToast">Input a valid phone number.</string>
-    <string name="make_an_order">MAKE AN ORDER</string>
-    <string name="qr">QR</string>
+    <string name="make_an_order">Make an order</string>
+    <string name="qr">QR scan</string>
     <string name="textViewQr">Scan canceled</string>
     <string name="textViewQrFail">QR scan failed</string>
     <string name="integratorPrompt">Scan QR code</string>
@@ -35,4 +35,5 @@
     <string name="profile">Profile</string>
     <string name="my_orders">My orders</string>
     <string name="home">Home</string>
+    <string name="user_name">User name</string>
 </resources>

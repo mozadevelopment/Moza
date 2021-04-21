@@ -25,7 +25,7 @@
     <string name="phoneInvalidToast">Ingrese un número de teléfono válido.</string>
     <string name="phoneNeededToast">Se requiere un numero de telefono</string>
     <string name="make_an_order">Realizar pedido</string>
-    <string name="qr">QR</string>
+    <string name="qr">Escanear QR</string>
     <string name="textViewQr">Escaneo cancelado</string>
     <string name="textViewQrFail">Error al escanear el código QR</string>
     <string name="integratorPrompt">Escanear código QR</string>
@@ -34,4 +34,5 @@
     <string name="profile">Perfil</string>
     <string name="my_orders">Mis pedidos</string>
     <string name="home">Inicio</string>
+    <string name="user_name">Nombre de usuario</string>
 </resources>
