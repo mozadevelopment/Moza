@@ -18,11 +18,10 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.integration.android.IntentIntegrator;
 
-public class HomeFragment extends Fragment  {
+public class HomeFragment extends Fragment {
 
     private Button qr, makeAnOrder;
     private TextView textViewQr; //cuando quede la parte del scanner con el menu quitar esto
-
 
 
     @Nullable
@@ -45,7 +44,7 @@ public class HomeFragment extends Fragment  {
     }
 
     public void scan() {
-        IntentIntegrator integrator =  IntentIntegrator.forSupportFragment(HomeFragment.this);
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(HomeFragment.this);
         integrator.setOrientationLocked(false);
         integrator.setCaptureActivity(CaptureActivityPortrait.class);
         integrator.setPrompt(getString(R.string.integratorPrompt));

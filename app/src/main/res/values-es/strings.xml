@@ -35,4 +35,14 @@
     <string name="user_name">Nombre de usuario</string>
     <string name="scanCanceledToast">Escaneo cancelado</string>
     <string name="qrScanFailedToast">Error al escanear el código QR</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="save">Guardar</string>
+    <string name="phone_number">Teléfono</string>
+    <string name="last_name">Apellido</string>
+    <string name="first_name">Nombre</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="new_password">Contraseña nueva</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="confirm">Confirmar</string>
+    <string name="text_view_change_password">CAMBIAR CONTRASEÑA</string>
 </resources>

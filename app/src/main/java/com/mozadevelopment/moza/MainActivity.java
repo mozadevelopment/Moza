@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -75,6 +74,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
+                break;
+            case R.id.nav_change_password:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ChangePasswordFragment()).commit();
                 break;
             case R.id.nav_logout:
                 logout();

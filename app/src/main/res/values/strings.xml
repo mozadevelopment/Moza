@@ -36,4 +36,14 @@
     <string name="user_name">User name</string>
     <string name="scanCanceledToast">Scan canceled</string>
     <string name="qrScanFailedToast">QR scan failed</string>
+    <string name="change_password">Change password</string>
+    <string name="save">Save</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="confirm">Confirm</string>
+    <string name="text_view_change_password">CHANGE PASSWORD</string>
 </resources>
