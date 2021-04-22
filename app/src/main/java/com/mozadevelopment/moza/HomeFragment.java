@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,11 +18,11 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.integration.android.IntentIntegrator;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  {
 
     private Button qr, makeAnOrder;
-    private TextView textViewQr, textViewQrFail; //cuando quede la parte del scanner con el menu quitar esto
-    String integratorPrompt = "Scan QR code"; //cuando quede la parte del scanner con el menu quitar esto
+    private TextView textViewQr; //cuando quede la parte del scanner con el menu quitar esto
+
 
 
     @Nullable
@@ -31,7 +32,7 @@ public class HomeFragment extends Fragment {
         qr = (Button) rootView.findViewById(R.id.button_qr_scan);
         makeAnOrder = (Button) rootView.findViewById(R.id.button_make_an_order);
         textViewQr = rootView.findViewById(R.id.text_view_qr);
-        textViewQrFail = rootView.findViewById(R.id.text_view_qr);
+
 
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +44,12 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-
-
     public void scan() {
         IntentIntegrator integrator =  IntentIntegrator.forSupportFragment(HomeFragment.this);
         integrator.setOrientationLocked(false);
         integrator.setCaptureActivity(CaptureActivityPortrait.class);
         integrator.setPrompt(getString(R.string.integratorPrompt));
+        integrator.setBeepEnabled(false);
         integrator.initiateScan();
     }
 
@@ -74,9 +74,9 @@ public class HomeFragment extends Fragment {
             if (result.getContents() != null) {
                 textViewQr.setText(result.getContents());
             } else if (result.getContents() == null) {
-                textViewQr.setText(R.string.textViewQr);
+                Toast.makeText(getContext(), R.string.scanCanceledToast, Toast.LENGTH_SHORT).show();
             } else {
-                textViewQrFail.setText(R.string.textViewQrFail);
+                Toast.makeText(getContext(), R.string.qrScanFailedToast, Toast.LENGTH_SHORT).show();
             }
     }
 }
