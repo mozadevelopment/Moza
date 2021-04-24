@@ -2,15 +2,16 @@ package com.mozadevelopment.moza.Database;
 
 public class UserHelperClass {
 
-    String name, email, phoneNumber, password;
+    String name, email, phoneNumber, password, role;
 
     public UserHelperClass(){}
 
-    public UserHelperClass(String name, String email, String phoneNumber, String password) {
+    public UserHelperClass(String name, String email, String phoneNumber, String password, String role) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.role = role;
     }
 
     public String getName() {
@@ -43,6 +44,14 @@ public class UserHelperClass {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
 

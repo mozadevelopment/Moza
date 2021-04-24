@@ -33,11 +33,11 @@ public class HomeFragment extends Fragment {
         textViewQr = rootView.findViewById(R.id.text_view_qr);
 
 
-        qr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scan();
-            }
+        qr.setOnClickListener(v -> scan());
+
+        makeAnOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MenuPageActivity.class);
+            startActivity(intent);
         });
 
         return rootView;
@@ -51,19 +51,6 @@ public class HomeFragment extends Fragment {
         integrator.setBeepEnabled(false);
         integrator.initiateScan();
     }
-
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.button_qr_scan:
-                    scan();
-                    break;
-                case R.id.button_make_an_order:
-                    break;
-            }
-        }
-    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

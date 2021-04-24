@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +18,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
+import java.util.function.ToDoubleBiFunction;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
@@ -24,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     EditText editTextEmail, editTextPassword;
     TextView forgotPassword;
+    String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                finish();
+                //checkAccessLevel();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -91,11 +101,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-
         if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            Log.i("UserId", userId);
             finish();
             startActivity(new Intent(this, MainActivity.class));
         }
+    }
+
+    private void checkAccessLevel(){
+
+        /*//TODO - Check admin role to access different main activity.
+
+// Get a reference to our posts
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("Users");
+        String userId = mAuth.getCurrentUser().getUid();
+        System.out.println(userId);
+
+// Attach a listener to read the data at our posts reference
+
+        FirebaseDatabase.getInstance().getReference(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(userId)){
+                    role = snapshot.getValue("Role");
+                }
+                Map<String, String> map = (Map<String, String>) snapshot.getValue();
+                role = map.get("Role");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+        System.out.println("hi1");
+
+        if (role != null) {
+            if (role == "Admin") {
+                System.out.println("hi");
+                startActivity(new Intent(this, AdminMainActivity.class));
+            } else if (role == "User"){
+                startActivity(new Intent(this, MainActivity.class));
+            }
+        }*/
     }
 
     @Override
