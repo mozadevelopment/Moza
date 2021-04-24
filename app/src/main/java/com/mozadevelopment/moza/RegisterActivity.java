@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private static final String USERS = "Users";
+    private static final String role = "User";
     private UserHelperClass user;
 
     @Override
@@ -58,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 phoneNumber = ccp.getSelectedCountryCodeWithPlus() + phone; //Agregar codigo de pais al telefono
                 password = editTextPassword.getText().toString();
 
-                user = new UserHelperClass(name, email, phoneNumber, password); //se usa los setters y getters de la clase de ayuda, y se asigna los valores a user
+                user = new UserHelperClass(name, email, phoneNumber, password, role); //se usa los setters y getters de la clase de ayuda, y se asigna los valores a user
                 registerUser();
             }
         });
@@ -86,8 +87,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void updateUI(FirebaseUser currentUser) {
-        String userId = mDatabase.push().getKey();
-        mDatabase.child(userId).setValue(user); //Se agrega data de user a la bd
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(USERS).child(userId);
+        dbRef.setValue(user); //Se agrega data de user a la bd
         Intent loginIntent = new Intent(this, MainActivity.class);
 
         startActivity(loginIntent);
