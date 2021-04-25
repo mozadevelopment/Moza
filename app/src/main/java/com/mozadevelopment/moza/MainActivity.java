@@ -19,12 +19,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.squareup.picasso.Picasso;
 
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    CircleImageView profileImage;
+    DatabaseReference mDatabase;
+    TextView userName;
+    String uid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +55,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        View headView = navigationView.getHeaderView(0);
+        profileImage = headView.findViewById(R.id.profile_image);
+        userName = headView.findViewById(R.id.user_name);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+        }
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+        showUserData();
     }
 
     public void logout() {
@@ -100,5 +124,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void showUserData() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String user_name = dataSnapshot.child("name").getValue().toString();
+                String user_profilephoto = dataSnapshot.child("imageURL").getValue(String.class);
+
+                userName.setText(user_name);
+
+                if (user_profilephoto == null) {
+                    profileImage.setImageResource(R.drawable.ic_profile);
+                } else {
+                    Picasso.get().load(user_profilephoto).into(profileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
 
 }

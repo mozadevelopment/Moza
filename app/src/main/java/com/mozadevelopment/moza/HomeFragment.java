@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +24,6 @@ public class HomeFragment extends Fragment {
     private Button qr, makeAnOrder;
     private TextView textViewQr; //cuando quede la parte del scanner con el menu quitar esto
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment {
         qr = (Button) rootView.findViewById(R.id.button_qr_scan);
         makeAnOrder = (Button) rootView.findViewById(R.id.button_make_an_order);
         textViewQr = rootView.findViewById(R.id.text_view_qr);
-
 
         qr.setOnClickListener(v -> scan());
 

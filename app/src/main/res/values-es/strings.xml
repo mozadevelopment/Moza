@@ -45,4 +45,5 @@
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="confirm">Confirmar</string>
     <string name="text_view_change_password">CAMBIAR CONTRASEÑA</string>
+    <string name="change_photo">Cambiar foto</string>
 </resources>

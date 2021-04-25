@@ -4,23 +4,34 @@
     android:layout_height="200dp"
     android:background="@drawable/header_background"
     android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="30dp"
+    android:orientation="horizontal"
+    android:padding="15dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_profile" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:paddingStart="0dp"
-        android:text="@string/user_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/ic_profile" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profile_image"
+            android:padding="5dp"
+            android:text="@string/user_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="30sp" />
+
+    </RelativeLayout>
 
 </LinearLayout>
