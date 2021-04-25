@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moza">
-        <activity android:name=".AdminMainActivity"/>
+        <activity android:name=".CheckAccessLevelActivity"></activity>
+        <activity android:name=".AdminMainActivity" />
         <activity android:name=".OrderActivity" />
         <activity android:name=".MenuPageActivity" />
         <activity

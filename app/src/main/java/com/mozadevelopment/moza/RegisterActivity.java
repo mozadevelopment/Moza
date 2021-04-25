@@ -26,8 +26,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     CountryCodePicker ccp;
     FirebaseAuth mAuth;
     private Button registerButton;
-    private FirebaseDatabase database;
-    private DatabaseReference mDatabase;
     private static final String USERS = "Users";
     private static final String role = "User";
     private UserHelperClass user;
@@ -43,8 +41,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ccp = findViewById(R.id.ccp);
         editTextPhone = findViewById(R.id.edit_text_phone);
         registerButton = findViewById(R.id.button_register);
-        database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference(USERS);
         mAuth = FirebaseAuth.getInstance();
 
         ccp.registerCarrierNumberEditText(editTextPhone); //Unir codigo de pais con numero de telefono
@@ -90,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(USERS).child(userId);
         dbRef.setValue(user); //Se agrega data de user a la bd
-        Intent loginIntent = new Intent(this, MainActivity.class);
+        Intent loginIntent = new Intent(this, CheckAccessLevelActivity.class);
 
         startActivity(loginIntent);
     }

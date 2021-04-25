@@ -18,11 +18,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mozadevelopment.moza.Database.UserHelperClass;
 
 import java.util.Map;
 import java.util.function.ToDoubleBiFunction;
@@ -33,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     EditText editTextEmail, editTextPassword;
     TextView forgotPassword;
-    String role;
+    String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin(){
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        email = editTextEmail.getText().toString().trim();
+        password = editTextPassword.getText().toString().trim();
         String emailNeeded = getString(R.string.emailNeededToast);
         String emailValid = getString(R.string.emailValidToast);
         String passwordValid = getString(R.string.passwordValidToast);
@@ -88,8 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                //checkAccessLevel();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, CheckAccessLevelActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             } else {
@@ -102,51 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            String userId = mAuth.getCurrentUser().getUid();
-            Log.i("UserId", userId);
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, CheckAccessLevelActivity.class));
         }
-    }
-
-    private void checkAccessLevel(){
-
-        /*//TODO - Check admin role to access different main activity.
-
-// Get a reference to our posts
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("Users");
-        String userId = mAuth.getCurrentUser().getUid();
-        System.out.println(userId);
-
-// Attach a listener to read the data at our posts reference
-
-        FirebaseDatabase.getInstance().getReference(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(userId)){
-                    role = snapshot.getValue("Role");
-                }
-                Map<String, String> map = (Map<String, String>) snapshot.getValue();
-                role = map.get("Role");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                throw error.toException();
-            }
-        });
-
-        System.out.println("hi1");
-
-        if (role != null) {
-            if (role == "Admin") {
-                System.out.println("hi");
-                startActivity(new Intent(this, AdminMainActivity.class));
-            } else if (role == "User"){
-                startActivity(new Intent(this, MainActivity.class));
-            }
-        }*/
     }
 
     @Override
