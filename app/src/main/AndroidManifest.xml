@@ -14,11 +14,13 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Moza"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        tools:replace="android:theme"
         android:theme="@style/Theme.Moza">
-        <activity android:name=".CheckAccessLevelActivity"></activity>
+        <activity android:name=".ItemDetailsActivity"></activity>
+        <activity android:name=".CheckAccessLevelActivity" />
         <activity android:name=".AdminMainActivity" />
         <activity android:name=".OrderActivity" />
         <activity android:name=".MenuPageActivity" />

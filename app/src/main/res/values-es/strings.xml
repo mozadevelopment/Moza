@@ -55,4 +55,6 @@
     <string name="price">Precio</string>
     <string name="add_image">Agregar imagen</string>
     <string name="add_item_text_view">Agregar producto al menú</string>
+    <string name="annotation">Aclaraciones</string>
+    <string name="add_to_cart">Agregar</string>
 </resources>

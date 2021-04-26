@@ -2,15 +2,19 @@ package com.mozadevelopment.moza.Database;
 
 public class MenuHelperClass {
 
-    private String name, description, price, imageUrl;
+    private String name, description, price, imageUrl, itemId;
 
     public MenuHelperClass() {}
 
-    public MenuHelperClass (String name, String description, String price, String imageURL){
+    public MenuHelperClass (String name, String description, String price, String imageURL, String itemId){
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageURL;
+    }
+
+    public String getItemId() {
+        return itemId;
     }
 
     public String getPrice() {
@@ -27,6 +31,10 @@ public class MenuHelperClass {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public void setImageUrl(String imageUrl) {
