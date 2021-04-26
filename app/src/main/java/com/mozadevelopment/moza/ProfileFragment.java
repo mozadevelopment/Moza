@@ -52,8 +52,8 @@ public class ProfileFragment extends Fragment {
 
     Button saveProfile;
     CircleImageView profilePhoto;
-    TextInputEditText firstName, profileEmail, profilePhone;
-    TextView fullName, changePhoto;
+    TextInputEditText firstName, profilePhone;
+    TextView fullName, profileEmail, changePhoto;
     String uid;
     CountryCodePicker ccpProfile;
     FirebaseUser user;
@@ -213,12 +213,10 @@ public class ProfileFragment extends Fragment {
 
     private void saveProfileSettings() {
         final String first_name = firstName.getText().toString();
-        final String profile_email = profileEmail.getText().toString();
         final String profile_phone = profilePhone.getText().toString();
         final String full_phone_number = ccpProfile.getSelectedCountryCodeWithPlus() + profile_phone;
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("name", first_name);
-        userMap.put("email", profile_email);
         userMap.put("phoneNumber", full_phone_number);
         mDatabase.updateChildren(userMap);
     }

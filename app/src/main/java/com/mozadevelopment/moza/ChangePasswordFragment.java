@@ -51,8 +51,9 @@ public class ChangePasswordFragment extends Fragment {
 
         return rootView;
     }
-    
+
     private boolean validatePassword() {
+        String val2 = confirmPassword.getText().toString().trim();
         String val = newPassword.getText().toString().trim();
         String checkValidPassword = "^" +
                 "(?=.*[0-9])" + //por lo menos un caracter
@@ -67,6 +68,9 @@ public class ChangePasswordFragment extends Fragment {
             return false;
         } else if (!val.matches(checkValidPassword)) {
             newPassword.setError(passwordValidToast);
+            return false;
+        } else if (val != val2) {
+
             return false;
         } else {
             newPassword.setError(null);
