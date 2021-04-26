@@ -48,4 +48,13 @@
     <string name="confirm">Confirm</string>
     <string name="text_view_change_password">CHANGE PASSWORD</string>
     <string name="change_photo">Change photo</string>
+    <string name="edit_menu">Edit Menu</string>
+    <string name="item_description">Description</string>
+    <string name="itemNameNeededToast">Please input the new item name.</string>
+    <string name="itemPriceNeededToast">Please input the new item price.</string>
+    <string name="itemPriceValidToast">Please only input numbers.</string>
+    <string name="itemDescriptionNeededToast">Please input a description</string>
+    <string name="price">Price</string>
+    <string name="add_image">Add image</string>
+    <string name="add_item_text_view">Add item to the menu</string>
 </resources>

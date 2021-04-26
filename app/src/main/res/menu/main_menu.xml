@@ -21,6 +21,11 @@
             android:id="@+id/nav_change_password"
             android:icon="@drawable/ic_change_password"
             android:title="@string/change_password" />
+        <item
+            android:id="@+id/nav_edit_menu"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="@string/edit_menu"
+            android:visible="false"/>
     </group>
 
 

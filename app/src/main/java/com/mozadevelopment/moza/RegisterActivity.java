@@ -1,14 +1,19 @@
 package com.mozadevelopment.moza;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,9 +24,10 @@ import com.mozadevelopment.moza.Database.UserHelperClass;
 
 import java.util.Objects;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity {
 
     EditText editTextEmail, editTextPassword, editTextName,editTextPhone;
+    TextView tvLogin;
     String name, email, phone, phoneNumber, password;
     CountryCodePicker ccp;
     FirebaseAuth mAuth;
@@ -30,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private static final String role = "User";
     private UserHelperClass user;
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ccp = findViewById(R.id.ccp);
         editTextPhone = findViewById(R.id.edit_text_phone);
         registerButton = findViewById(R.id.button_register);
+        tvLogin = findViewById(R.id.text_view_login);
         mAuth = FirebaseAuth.getInstance();
 
         ccp.registerCarrierNumberEditText(editTextPhone); //Unir codigo de pais con numero de telefono
@@ -59,6 +67,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 registerUser();
             }
         });
+
+        tvLogin.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
 
     }
 
@@ -87,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(USERS).child(userId);
         dbRef.setValue(user); //Se agrega data de user a la bd
         Intent loginIntent = new Intent(this, CheckAccessLevelActivity.class);
-
         startActivity(loginIntent);
     }
 
@@ -165,14 +174,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.text_view_login:
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-        }
+    public void onBackPressed() {
+        this.finish();
     }
 }

@@ -7,14 +7,16 @@
 
 
     <androidx.cardview.widget.CardView
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="132dp" >
+        tools:layout_editor_absoluteY="132dp"
+        android:background="@drawable/card_edge">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <TextView
@@ -27,17 +29,17 @@
                 android:layout_marginTop="20dp"
                 android:text="Lorem Ipsum"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/itemDescription"
-                android:layout_width="248dp"
-                android:layout_height="67dp"
+                android:layout_width="260dp"
+                android:layout_height="36dp"
                 android:layout_below="@+id/itemName"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis sodales sem. Quisque vehicula arcu efficitur pretium dictum." />
+                android:layout_marginTop="2dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
 
             <TextView
                 android:id="@+id/itemPrice"
@@ -46,27 +48,26 @@
                 android:layout_below="@+id/itemDescription"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="-1dp"
                 android:text="$ Price"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/itemImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="94dp"
+                android:layout_height="75dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="25dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="13dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="12dp"
                 android:layout_toEndOf="@+id/itemDescription"
-                android:layout_toRightOf="@+id/itemDescription"
-                android:background="@drawable/placeholder100x100" />
+                android:layout_toRightOf="@+id/itemDescription" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

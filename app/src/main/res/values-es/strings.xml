@@ -45,5 +45,14 @@
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="confirm">Confirmar</string>
     <string name="text_view_change_password">CAMBIAR CONTRASEÑA</string>
+    <string name="edit_menu">Editar menú</string>
     <string name="change_photo">Cambiar foto</string>
+    <string name="item_description">Descripción</string>
+    <string name="itemNameNeededToast">Ingrese el nombre del producto.</string>
+    <string name="itemPriceNeededToast">Ingrese el precio del producto.</string>
+    <string name="itemPriceValidToast">Ingrese únicamente números.</string>
+    <string name="itemDescriptionNeededToast">Ingrese una descripción</string>
+    <string name="price">Precio</string>
+    <string name="add_image">Agregar imagen</string>
+    <string name="add_item_text_view">Agregar producto al menú</string>
 </resources>

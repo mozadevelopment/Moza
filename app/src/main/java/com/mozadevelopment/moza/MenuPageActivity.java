@@ -1,10 +1,8 @@
 package com.mozadevelopment.moza;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,18 +11,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.mozadevelopment.moza.Adapter.ItemRecyclerViewAdapter;
 import com.mozadevelopment.moza.Database.MenuHelperClass;
-import com.mozadevelopment.moza.ViewHolder.ItemViewHolder;
-import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+
 
 public class MenuPageActivity extends AppCompatActivity {
 
     private RecyclerView rvMenuList;
     private DatabaseReference itemsDatabaseReference;
+
+    private ArrayList<MenuHelperClass> arrayListMenu;
+
+    private ItemRecyclerViewAdapter recyclerAdapter;
 
 
     @Override
@@ -36,42 +43,65 @@ public class MenuPageActivity extends AppCompatActivity {
         rvMenuList.setHasFixedSize(true);
         rvMenuList.setLayoutManager(new LinearLayoutManager(this));
 
-        itemsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
+        itemsDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
+        arrayListMenu = new ArrayList<>();
+
+        ClearAll();
+        GetDataFromFirebase();
+    }
+
+    private void GetDataFromFirebase() {
+
+        Query query = itemsDatabaseReference.child("Menu").child("Items");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                ClearAll();
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    MenuHelperClass items = new MenuHelperClass();
+
+                    items.setImageUrl(dataSnapshot.child("imageURL").getValue().toString());
+                    items.setName(dataSnapshot.child("name").getValue().toString());
+                    items.setDescription(dataSnapshot.child("description").getValue().toString());
+                    items.setPrice(dataSnapshot.child("price").getValue().toString());
+
+                    arrayListMenu.add(items);
+                }
+
+                recyclerAdapter = new ItemRecyclerViewAdapter(getApplicationContext(), arrayListMenu);
+                rvMenuList.setAdapter(recyclerAdapter);
+                recyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void ClearAll(){
+        if (arrayListMenu != null) {
+            arrayListMenu.clear();
+
+            if (recyclerAdapter != null) {
+                recyclerAdapter.notifyDataSetChanged();
+            }
+
+        } else {
+            arrayListMenu = new ArrayList<>();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        FirebaseRecyclerOptions<MenuHelperClass> options =
-                new FirebaseRecyclerOptions.Builder<MenuHelperClass>()
-                .setQuery(itemsDatabaseReference, MenuHelperClass.class)
-                .build();
-
-        FirebaseRecyclerAdapter<MenuHelperClass, ItemViewHolder> adapter =
-                new FirebaseRecyclerAdapter<MenuHelperClass, ItemViewHolder>(options) {
-
-                    @Override
-                    protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull MenuHelperClass model) {
-                        holder.tvItemName.setText(model.getName());
-                        holder.tvItemDescription.setText(model.getDescription());
-                        holder.tvItemPrice.setText("$" + model.getPrice());
-                        Picasso.get().load(model.getImage()).into(holder.ivItemImage);
-                    }
-
-                    @NonNull
-                    @Override
-                    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item_layout, parent, false);
-                        ItemViewHolder holder = new ItemViewHolder(view);
-                        return holder;
-                    }
-                };
-
-        rvMenuList.setAdapter(adapter);
-        adapter.startListening();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
