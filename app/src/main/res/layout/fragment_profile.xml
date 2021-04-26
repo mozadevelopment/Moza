@@ -59,6 +59,17 @@
             android:orientation="vertical"
             android:padding="40dp">
 
+
+            <TextView
+                android:id="@+id/edit_text_email_profile"
+                android:layout_width="match_parent"
+                android:hint="Email"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:backgroundTint="@color/colorDivider"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,19 +79,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_first_name_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Email">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_email_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
