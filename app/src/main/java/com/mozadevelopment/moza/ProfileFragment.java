@@ -1,20 +1,15 @@
 package com.mozadevelopment.moza;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -47,6 +43,7 @@ import com.hbb20.CountryCodePicker;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -60,13 +57,17 @@ public class ProfileFragment extends Fragment {
     CircleImageView profilePhoto;
     TextInputEditText firstName, profileEmail, profilePhone;
     TextView fullName, changePhoto;
-    DatabaseReference mDatabase;
     String uid;
-
+    CountryCodePicker ccpProfile;
+    FirebaseUser user;
+    DatabaseReference mDatabase;
     StorageReference storageReference;
+    FirebaseFirestore fStore;
+
+
     private static final int IMAGE_REQUEST = 1;
     private Uri imageUri;
-    private StorageTask uploadTask;
+    private StorageTask<UploadTask.TaskSnapshot> uploadTask;
 
 
     @Nullable
@@ -80,8 +81,13 @@ public class ProfileFragment extends Fragment {
         profilePhoto = rootView.findViewById(R.id.image_view_profile_photo);
         saveProfile = rootView.findViewById(R.id.button_save_profile);
         changePhoto = rootView.findViewById(R.id.text_view_change_photo);
+        ccpProfile = rootView.findViewById(R.id.ccp_phone_profile);
 
+        ccpProfile.registerCarrierNumberEditText(profilePhone);
+
+        fStore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -98,6 +104,14 @@ public class ProfileFragment extends Fragment {
                 openImage();
             }
         });
+
+        saveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveProfileSettings();
+            }
+        });
+
 
         showUserData();
 
@@ -213,5 +227,18 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
+
+    private void saveProfileSettings() {
+        final String first_name = firstName.getText().toString();
+        final String profile_email = profileEmail.getText().toString();
+        final String profile_phone = profilePhone.getText().toString();
+        final String full_phone_number = ccpProfile.getSelectedCountryCodeWithPlus() + profile_phone;
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put("name", first_name);
+        userMap.put("email", profile_email);
+        userMap.put("phoneNumber", full_phone_number);
+        mDatabase.updateChildren(userMap);
+    }
 }
+
 

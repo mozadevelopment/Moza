@@ -49,7 +49,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="140dp"
                 android:textColor="@color/colorAccent"
-                android:textSize="30sp" />
+                android:textSize="50sp" />
 
         </RelativeLayout>
 
