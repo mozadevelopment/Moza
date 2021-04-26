@@ -62,6 +62,7 @@ public class ChangePasswordFragment extends Fragment {
                 "$";
         String passwordValidToast = getString(R.string.passwordValidToast);
         String passwordNeededToast = getString(R.string.passwordNeededToast);
+        String passwordMatchToast = getString(R.string.passwordMatchToast);
 
         if (val.isEmpty()) {
             newPassword.setError(passwordNeededToast);
@@ -70,7 +71,8 @@ public class ChangePasswordFragment extends Fragment {
             newPassword.setError(passwordValidToast);
             return false;
         } else if (val != val2) {
-
+            newPassword.setError(passwordMatchToast);
+            confirmPassword.setError(passwordMatchToast);
             return false;
         } else {
             newPassword.setError(null);

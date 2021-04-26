@@ -97,15 +97,18 @@ public class ProfileFragment extends Fragment {
 
         changePhoto.setOnClickListener(v -> openImage());
 
-        saveProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveProfileSettings();
-            }
+        saveProfile.setOnClickListener(v -> {
+            if(!validateName() | !validatePhone()){
+                return;
+            }else{
+                    saveProfileSettings();
+                }
         });
 
 
-        showUserData();
+
+
+    showUserData();
 
         return rootView;
     }
@@ -219,6 +222,36 @@ public class ProfileFragment extends Fragment {
         userMap.put("name", first_name);
         userMap.put("phoneNumber", full_phone_number);
         mDatabase.updateChildren(userMap);
+    }
+    private boolean validateName() {
+        String val = firstName.getText().toString().trim();
+        String nameNeededToast = getString(R.string.nameNeededToast);
+
+        if (val.isEmpty()){
+            firstName.setError(nameNeededToast);
+            return false;
+        } else {
+            firstName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePhone(){
+        String val = profilePhone.getText().toString().trim();
+        String phoneNumber = ccpProfile.getSelectedCountryCodeWithPlus() + val;
+        String phoneNeededToast = getString(R.string.phoneNeededToast);
+        String phoneInvalidToast = getString(R.string.phoneInvalidToast);
+
+        if (phoneNumber.isEmpty()){
+            profilePhone.setError(phoneNeededToast);
+            return false;
+        } else if (!ccpProfile.isValidFullNumber()){
+            profilePhone.setError(phoneInvalidToast);
+            return false;
+        } else {
+            profilePhone.setError(null);
+            return true;
+        }
     }
 }
 
