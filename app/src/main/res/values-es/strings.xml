@@ -46,4 +46,5 @@
     <string name="confirm">Confirmar</string>
     <string name="text_view_change_password">CAMBIAR CONTRASEÑA</string>
     <string name="change_photo">Cambiar foto</string>
+    <string name="passwordMatchToast">Las nuevas contraseñas no coinciden</string>
 </resources>

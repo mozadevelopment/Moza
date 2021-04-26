@@ -48,4 +48,5 @@
     <string name="confirm">Confirm</string>
     <string name="text_view_change_password">CHANGE PASSWORD</string>
     <string name="change_photo">Change photo</string>
+    <string name="passwordMatchToast">New passwords doesn\'t match</string>
 </resources>
