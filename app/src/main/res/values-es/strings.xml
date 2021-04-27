@@ -17,7 +17,7 @@
     <string name="passwordValidToast">Ingrese una contraseña mayor a 6 caracteres y con al menos un numero.</string>
     <string name="userNotFoundToast">Usuario no registrado o contraseña incorrecta</string>
     <string name="emailNotRegisteredToast">Por favor, ingrese su email registrado.</string>
-    <string name="sentEmailToast">Se envio un email para recuperar su contraseña/</string>
+    <string name="sentEmailToast">Se envio un email para recuperar su contraseña.</string>
     <string name="errorEmailToast">Hubo un error enviando el email.</string>
     <string name="nameNeededToast">Ingrese su nombre</string>
     <string name="phone">Telefono</string>

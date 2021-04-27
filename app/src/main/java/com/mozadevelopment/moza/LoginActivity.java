@@ -72,13 +72,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (password.isEmpty()){
-            editTextPassword.setError(emailValid);
+            editTextPassword.setError(passwordNeeded);
             editTextPassword.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError(passwordNeeded);
+            editTextEmail.setError(emailValid);
             editTextEmail.requestFocus();
             return;
         }
