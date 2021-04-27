@@ -57,5 +57,5 @@
     <string name="add_item_text_view">Agregar producto al menú</string>
     <string name="annotation">Aclaraciones</string>
     <string name="add_to_cart">Agregar</string>
-    <string name="passwordMatchToast">Las nuevas contraseñas no coinciden</string>
+    <string name="passwordMatchToast">Las contraseñas nuevas no coinciden</string>
 </resources>
