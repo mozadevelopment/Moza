@@ -70,7 +70,7 @@ public class ChangePasswordFragment extends Fragment {
         } else if (!val.matches(checkValidPassword)) {
             newPassword.setError(passwordValidToast);
             return false;
-        } else if (val != val2) {
+        } else if (!val.equals(val2)) {
             newPassword.setError(passwordMatchToast);
             confirmPassword.setError(passwordMatchToast);
             return false;
