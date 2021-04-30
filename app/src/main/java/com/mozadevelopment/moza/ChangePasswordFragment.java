@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mozadevelopment.moza.Database.UserHelperClass;
 
 import java.util.HashMap;
 
@@ -24,6 +23,7 @@ public class ChangePasswordFragment extends Fragment {
     TextInputEditText currentPassword, newPassword, confirmPassword;
     String uid;
     DatabaseReference mDatabase;
+    String current_password;
 
 
     @Nullable
@@ -37,22 +37,24 @@ public class ChangePasswordFragment extends Fragment {
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                confirm.setOnClickListener(v -> {
+          //  if (!validatePassword()) {
+          //      return;
+         //   } else {
+           //     String new_password = newPassword.getText().toString();
+            //    HashMap<String, Object> userMap = new HashMap<>();
+            //    userMap.put("password", new_password);
+            //    mDatabase.updateChildren(userMap);
+          //  }
 
-        confirm.setOnClickListener(v -> {
-            if (!validatePassword()) {
-                return;
-            } else {
-                String new_password = newPassword.getText().toString();
-                HashMap<String, Object> userMap = new HashMap<>();
-                userMap.put("password", new_password);
-                mDatabase.updateChildren(userMap);
-            }
+            currentPassword.setText(current_password);
         });
 
         return rootView;
     }
 
     private boolean validatePassword() {
+        String current_password = mDatabase.child("password").toString();
         String val2 = confirmPassword.getText().toString().trim();
         String val = newPassword.getText().toString().trim();
         String checkValidPassword = "^" +

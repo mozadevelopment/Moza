@@ -52,8 +52,8 @@ public class ProfileFragment extends Fragment {
 
     Button saveProfile;
     CircleImageView profilePhoto;
-    TextInputEditText firstName, profilePhone;
-    TextView fullName, profileEmail, changePhoto;
+    TextInputEditText firstName, profilePhone, profileEmail;
+    TextView fullName, changePhoto;
     String uid;
     CountryCodePicker ccpProfile;
     FirebaseUser user;
@@ -253,6 +253,7 @@ public class ProfileFragment extends Fragment {
             return true;
         }
     }
+
 }
 
 
