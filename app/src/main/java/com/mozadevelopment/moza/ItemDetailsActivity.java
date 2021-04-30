@@ -66,7 +66,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     private void addItemToCart() {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Cart List").child("User View");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Cart List");
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         SimpleDateFormat simpleDateFormat;
 

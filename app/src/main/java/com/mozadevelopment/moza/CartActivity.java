@@ -114,7 +114,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void GetDataFromFirebase() {
 
-        Query query = cartListRef.child("User View").child(userId);
+        Query query = cartListRef.child(userId);
 
         query.addValueEventListener(new ValueEventListener() {
 
