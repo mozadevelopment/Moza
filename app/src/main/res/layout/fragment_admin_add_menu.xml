@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AdminAddMenuFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +23,17 @@
             android:textAlignment="center"
             android:textSize="24sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"/>
+
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -38,6 +47,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -52,20 +62,19 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_gravity="top"
             android:hint="@string/item_description">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/item_description"
                 android:layout_width="match_parent"
-                android:layout_height="118dp"
-                android:layout_gravity="top"
-                android:id="@+id/item_description"/>
+                android:layout_height="120dp"
+                android:gravity="top|start"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <Button
             android:id="@+id/add_image_button"
@@ -77,7 +86,6 @@
             android:text="@string/add_image"
             app:backgroundTint="@color/colorSecondaryText" />
 
-
         <Button
             android:id="@+id/save_button"
             android:layout_width="match_parent"
@@ -87,9 +95,6 @@
             android:layout_marginRight="40dp"
             android:text="@string/save"
             android:textColor="@color/colorWhite" />
-
-
-
 
     </LinearLayout>
 

@@ -36,6 +36,15 @@
             android:textSize="24sp"
             android:layout_marginTop="10dp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"/>
+
         <TextView
             android:id="@+id/itemDescriptionDetails"
             android:layout_width="match_parent"
@@ -69,7 +78,7 @@
             app:finalNumber="99"
             app:initialNumber="1"
             app:textColor="@color/black"
-            app:textSize="8dp"
+            app:textSize="8sp"
             android:id="@+id/countItemsButton">
 
         </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
@@ -83,12 +92,14 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="30dp"
             android:hint="@string/annotation"
-            android:importantForAutofill="no">
+            android:importantForAutofill="no"
+            android:gravity="top|start">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextAnnotationItemDetails"
                 android:layout_width="match_parent"
-                android:layout_height="115dp" />
+                android:layout_height="115dp"
+                android:gravity="top|start"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

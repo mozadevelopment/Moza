@@ -60,4 +60,9 @@
     <string name="annotation">Annotation</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="passwordMatchToast">New passwords doesn\'t match</string>
+    <string name="cart">My Cart</string>
+    <string name="checkout">Checkout</string>
+    <string name="subtotal">Amount</string>
+    <string name="go_back_to_menu">Add More</string>
+    <string name="menu">Menu</string>
 </resources>

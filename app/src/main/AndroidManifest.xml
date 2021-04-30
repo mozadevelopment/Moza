@@ -17,9 +17,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:theme"
-        android:theme="@style/Theme.Moza">
-        <activity android:name=".ItemDetailsActivity"></activity>
+        android:theme="@style/Theme.Moza"
+        tools:replace="android:theme">
+        <activity android:name=".CartActivity"/>
+        <activity android:name=".ItemDetailsActivity" />
         <activity android:name=".CheckAccessLevelActivity" />
         <activity android:name=".AdminMainActivity" />
         <activity android:name=".OrderActivity" />

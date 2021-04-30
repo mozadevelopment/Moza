@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="-1dp"
-    tools:context=".MenuPageActivity">
+    tools:context=".CartActivity">
 
     <TextView
-        android:id="@+id/textViewMenu"
+        android:id="@+id/textViewMyCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -17,7 +18,7 @@
         android:layout_marginBottom="30dp"
         android:fontFamily="sans-serif-smallcaps"
         android:lineSpacingExtra="12sp"
-        android:text="@string/menu"
+        android:text="@string/cart"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -31,15 +32,51 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rvMenuPage"/>
+            android:id="@+id/recyclerViewCart"/>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/textViewItemFixedTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/subtotal" />
+
+        <TextView
+            android:id="@+id/textViewOrderAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:text="Lorem Ipsum"
+            android:textAlignment="viewEnd"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -58,15 +95,27 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/buttonOpenCart"
+            android:id="@+id/buttonGoBackToMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/buttonCheckout"
             android:layout_gravity="center_horizontal|end"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/cart" />
+            android:text="@string/go_back_to_menu"
+            app:backgroundTint="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/buttonCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal|end"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/checkout" />
 
     </RelativeLayout>
 

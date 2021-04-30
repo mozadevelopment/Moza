@@ -58,4 +58,9 @@
     <string name="annotation">Aclaraciones</string>
     <string name="add_to_cart">Agregar</string>
     <string name="passwordMatchToast">Las contraseñas nuevas no coinciden</string>
+    <string name="cart">Mi Carrito</string>
+    <string name="checkout">Finalizar</string>
+    <string name="subtotal">Monto</string>
+    <string name="go_back_to_menu">Agregar</string>
+    <string name="menu">Menú</string>
 </resources>

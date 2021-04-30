@@ -11,6 +11,7 @@ public class MenuHelperClass {
         this.description = description;
         this.price = price;
         this.imageUrl = imageURL;
+        this.itemId = itemId;
     }
 
     public String getItemId() {

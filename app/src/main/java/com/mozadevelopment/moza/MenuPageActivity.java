@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ public class MenuPageActivity extends AppCompatActivity {
 
     private RecyclerView rvMenuList;
     private DatabaseReference itemsDatabaseReference;
-
+    private Button openCartButton;
     private ArrayList<MenuHelperClass> arrayListMenu;
 
     private ItemRecyclerViewAdapter recyclerAdapter;
@@ -54,6 +55,9 @@ public class MenuPageActivity extends AppCompatActivity {
 
         ClearAll();
         GetDataFromFirebase();
+
+        openCartButton = findViewById(R.id.buttonOpenCart);
+        openCartButton.setOnClickListener(view -> startActivity(new Intent(MenuPageActivity.this, CartActivity.class)));
     }
 
     public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
@@ -74,7 +78,6 @@ public class MenuPageActivity extends AppCompatActivity {
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-
                 itemImage = itemView.findViewById(R.id.itemImage);
                 itemName = itemView.findViewById(R.id.itemName);
                 itemDescription = itemView.findViewById(R.id.itemDescription);
@@ -109,7 +112,6 @@ public class MenuPageActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
-
 
         @Override
         public int getItemCount() {
@@ -147,6 +149,7 @@ public class MenuPageActivity extends AppCompatActivity {
                     items.setName(dataSnapshot.child("name").getValue().toString());
                     items.setDescription(dataSnapshot.child("description").getValue().toString());
                     items.setPrice(dataSnapshot.child("price").getValue().toString());
+                    items.setItemId(dataSnapshot.child("itemId").getValue().toString());
 
                     arrayListMenu.add(items);
                 }
@@ -161,12 +164,6 @@ public class MenuPageActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override
