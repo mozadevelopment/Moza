@@ -55,12 +55,14 @@ public class CartActivity extends AppCompatActivity {
 
         checkoutButton = findViewById(R.id.buttonCheckout);
         addMoreButton = findViewById(R.id.buttonGoBackToMenu);
+        textViewTotalAmount = findViewById(R.id.textViewOrderAmount);
 
         //Firebase
         cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         addMoreButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, MenuPageActivity.class)));
+        checkoutButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, CheckoutActivity.class)));
 
         GetDataFromFirebase();
     }
@@ -118,10 +120,9 @@ public class CartActivity extends AppCompatActivity {
 
         query.addValueEventListener(new ValueEventListener() {
 
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     CartHelperClass items = new CartHelperClass();
 
                     items.setItemName(dataSnapshot.child("name").getValue().toString());
@@ -135,6 +136,7 @@ public class CartActivity extends AppCompatActivity {
                 recyclerAdapter = new CartActivity.CartRecyclerViewAdapter(getApplicationContext(), arrayListMenu);
                 recyclerView.setAdapter(recyclerAdapter);
                 recyclerAdapter.notifyDataSetChanged();
+
             }
 
             @Override

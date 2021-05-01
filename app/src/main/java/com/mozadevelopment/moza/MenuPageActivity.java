@@ -30,14 +30,17 @@ import com.mozadevelopment.moza.Database.MenuHelperClass;
 
 import java.util.ArrayList;
 
+import static android.view.View.INVISIBLE;
+
 public class MenuPageActivity extends AppCompatActivity {
 
     private RecyclerView rvMenuList;
     private DatabaseReference itemsDatabaseReference;
     private Button openCartButton;
     private ArrayList<MenuHelperClass> arrayListMenu;
-
+    private String amountAdded;
     private ItemRecyclerViewAdapter recyclerAdapter;
+    int amountAddedInt, itemsInCart = 0;
 
 
     @Override
@@ -53,10 +56,27 @@ public class MenuPageActivity extends AppCompatActivity {
 
         arrayListMenu = new ArrayList<>();
 
+        //Cart button visibility
+
+        amountAdded = getIntent().getStringExtra("amountItemsAdded");
+
+        try {
+            amountAddedInt = Integer.parseInt(amountAdded);
+            itemsInCart = amountAddedInt;
+        } catch(NumberFormatException nfe){
+            System.out.println("Could not parse string " + nfe);
+        }
+
         ClearAll();
         GetDataFromFirebase();
 
         openCartButton = findViewById(R.id.buttonOpenCart);
+        if (itemsInCart > 0) {
+            openCartButton.setVisibility(View.VISIBLE);
+        } else {
+            openCartButton.setVisibility(View.INVISIBLE);
+        }
+
         openCartButton.setOnClickListener(view -> startActivity(new Intent(MenuPageActivity.this, CartActivity.class)));
     }
 
@@ -109,6 +129,7 @@ public class MenuPageActivity extends AppCompatActivity {
                 intent.putExtra("itemDescription", itemList.get(position).getDescription());
                 intent.putExtra("itemPrice", itemList.get(position).getPrice());
                 intent.putExtra("itemId", itemList.get(position).getItemId());
+                intent.putExtra("itemsInCart", itemsInCart);
                 startActivity(intent);
             });
         }
@@ -175,11 +196,6 @@ public class MenuPageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 }

@@ -19,11 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moza"
         tools:replace="android:theme">
-        <activity android:name=".CartActivity"/>
+        <activity android:name=".CheckoutActivity"></activity>
+        <activity android:name=".CartActivity" />
         <activity android:name=".ItemDetailsActivity" />
         <activity android:name=".CheckAccessLevelActivity" />
         <activity android:name=".AdminMainActivity" />
-        <activity android:name=".OrderActivity" />
         <activity android:name=".MenuPageActivity" />
         <activity
             android:name=".RegisterActivity"

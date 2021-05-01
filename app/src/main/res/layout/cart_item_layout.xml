@@ -1,60 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/card_edge"
-    android:layout_margin="10dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/cartItemAmount"
-        android:layout_width="36dp"
-        android:layout_height="match_parent"
-        android:layout_toStartOf="@id/itemDescription"
-        android:hint="x1"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal|center_vertical"/>
-
-    <RelativeLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/card_edge"
+        android:layout_margin="10dp"
+        android:id="@+id/cartItemCardView">
 
         <TextView
-            android:id="@+id/cartItemName"
-            android:layout_width="wrap_content"
+            android:id="@+id/cartItemAmount"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@id/itemDescription"
+            android:hint="x1"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal|center_vertical"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            android:text="Lorem Ipsum"
-            android:textColor="#000000"
-            android:textSize="15sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cartItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:text="Lorem Ipsum"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/cartItemDescription"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cartItemName"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/cartItemDescription"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cartItemName"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+            android:id="@+id/cartItemPrice"
+            android:layout_width="58dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="$ Price"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/cartItemPrice"
-        android:layout_width="58dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_marginStart="20dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="$ Price"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

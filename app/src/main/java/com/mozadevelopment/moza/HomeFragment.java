@@ -26,8 +26,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        qr = (Button) rootView.findViewById(R.id.button_qr_scan);
-        makeAnOrder = (Button) rootView.findViewById(R.id.button_make_an_order);
+        qr = rootView.findViewById(R.id.button_qr_scan);
+        makeAnOrder = rootView.findViewById(R.id.button_make_an_order);
         textViewQr = rootView.findViewById(R.id.text_view_qr);
 
         qr.setOnClickListener(v -> scan());
