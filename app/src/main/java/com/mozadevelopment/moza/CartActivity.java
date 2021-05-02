@@ -1,11 +1,5 @@
 package com.mozadevelopment.moza;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mozadevelopment.moza.Database.CartHelperClass;
-import com.mozadevelopment.moza.Database.MenuHelperClass;
 
 import java.util.ArrayList;
 
@@ -37,7 +34,8 @@ public class CartActivity extends AppCompatActivity {
     private TextView textViewTotalAmount;
     private DatabaseReference cartListRef;
     private ArrayList<CartHelperClass> arrayListMenu;
-    String userId;
+    private CardView cartItemCardView;
+    private String userId, editItem, deleteItem, cartEdit, itemId;
 
     private CartRecyclerViewAdapter recyclerAdapter;
 
@@ -56,6 +54,9 @@ public class CartActivity extends AppCompatActivity {
         checkoutButton = findViewById(R.id.buttonCheckout);
         addMoreButton = findViewById(R.id.buttonGoBackToMenu);
         textViewTotalAmount = findViewById(R.id.textViewOrderAmount);
+        editItem = getString(R.string.edit_item);
+        deleteItem = getString(R.string.delete_item);
+        cartEdit = getString(R.string.edit_cart);
 
         //Firebase
         cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
@@ -66,8 +67,6 @@ public class CartActivity extends AppCompatActivity {
 
         GetDataFromFirebase();
     }
-
-
 
     public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
 
@@ -82,6 +81,7 @@ public class CartActivity extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
 
             public TextView tvItemName, tvItemDescription, tvItemPrice, tvItemAmount;
+            public CardView itemCardView;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -89,6 +89,7 @@ public class CartActivity extends AppCompatActivity {
                 tvItemDescription = itemView.findViewById(R.id.cartItemDescription);
                 tvItemPrice = itemView.findViewById(R.id.cartItemPrice);
                 tvItemAmount = itemView.findViewById(R.id.cartItemAmount);
+                itemCardView = itemView.findViewById(R.id.itemCardView);
             }
         }
 
@@ -109,9 +110,10 @@ public class CartActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return itemList.size();
-        }
 
+            return itemList.size();
+
+        }
     }
 
     private void GetDataFromFirebase() {
@@ -129,6 +131,7 @@ public class CartActivity extends AppCompatActivity {
                     items.setItemAmount(dataSnapshot.child("amount").getValue().toString());
                     items.setItemPrice(dataSnapshot.child("price").getValue().toString());
                     items.setItemDescription(dataSnapshot.child("description").getValue().toString());
+                    items.setItemId(dataSnapshot.child("itemId").getValue().toString());
 
                     arrayListMenu.add(items);
                 }

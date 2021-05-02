@@ -1,10 +1,10 @@
 package com.mozadevelopment.moza;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,12 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,8 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.mozadevelopment.moza.Database.MenuHelperClass;
 
 import java.util.ArrayList;
-
-import static android.view.View.INVISIBLE;
 
 public class MenuPageActivity extends AppCompatActivity {
 
@@ -188,14 +185,23 @@ public class MenuPageActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.delete_cart_list_alert);
+        builder.setMessage(R.string.confirm_delete_cart_alert);
+
+        builder.setPositiveButton(R.string.ok_alert_button, (dialog, which) -> {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId);
+            ref.removeValue();
+            super.onBackPressed();
+        });
+
+        builder.setNegativeButton(R.string.no_alert_button, (dialog, which) -> dialog.cancel());
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

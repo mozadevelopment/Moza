@@ -63,4 +63,18 @@
     <string name="subtotal">Monto</string>
     <string name="go_back_to_menu">Agregar</string>
     <string name="menu">Menú</string>
+    <string name="no_alert_button">No</string>
+    <string name="delete_cart_list_alert">Borrar pedido</string>
+    <string name="confirm_delete_cart_alert">Si abandona el menú, tu pedido se eliminara. ¿Está seguro?</string>
+    <string name="ok_alert_button">Si</string>
+    <string name="last_step">Último paso!</string>
+    <string name="finish_order">Enviar orden</string>
+    <string name="Payment">Pago</string>
+    <string name="credit_card">Tarjeta</string>
+    <string name="cash">Efectivo</string>
+    <string name="address">Dirección</string>
+    <string name="address_example">Calle, Puerta, Piso, Barrio</string>
+    <string name="edit_item">Editar</string>
+    <string name="delete_item">Borrar</string>
+    <string name="edit_cart">"Editar carrito: "</string>
 </resources>

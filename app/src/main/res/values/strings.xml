@@ -65,4 +65,18 @@
     <string name="subtotal">Amount</string>
     <string name="go_back_to_menu">Add More</string>
     <string name="menu">Menu</string>
+    <string name="delete_cart_list_alert">Delete cart</string>
+    <string name="confirm_delete_cart_alert">If you go back, your cart list will be deleted. Are you sure?</string>
+    <string name="ok_alert_button">Yes</string>
+    <string name="no_alert_button">No</string>
+    <string name="last_step">Last step!</string>
+    <string name="finish_order">Finish order</string>
+    <string name="Payment">Payment</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="cash">Cash</string>
+    <string name="address">Address</string>
+    <string name="address_example">Street, Number, Apartment, Neighborhood</string>
+    <string name="edit_item">Edit</string>
+    <string name="delete_item">Delete</string>
+    <string name="edit_cart">Edit cart options: </string>
 </resources>

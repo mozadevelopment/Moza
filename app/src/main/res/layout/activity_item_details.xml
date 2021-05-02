@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="Item photo." />
+            android:contentDescription="Item photo."
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/itemNameDetails"
