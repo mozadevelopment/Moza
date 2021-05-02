@@ -26,7 +26,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
     Button addToCartButton, openCartButton;
     ElegantNumberButton amountButton;
     EditText etItemDetailsAnnotation;
-    int amountAddedInt, amountInCart;
     String itemsInCart, itemImageUrl, itemName, itemPrice, itemDescription, itemId, itemDetailsAnnotation, itemDetailsAmount;
 
     @Override
@@ -49,13 +48,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
         itemPrice = getIntent().getStringExtra("itemPrice");
         itemDescription = getIntent().getStringExtra("itemDescription");
         itemId = getIntent().getStringExtra("itemId");
-        itemsInCart = getIntent().getStringExtra("itemsInCart");
-
-        try {
-            amountInCart = Integer.parseInt(itemsInCart);
-        } catch(NumberFormatException nfe){
-            System.out.println("Could not parse string " + nfe);
-        }
 
         initViews();
     }
@@ -78,8 +70,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Cart List");
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         SimpleDateFormat simpleDateFormat;
-        String amountAdded, itemTotalAmountPrice = "";
-        int totalAmount, itemTotalPriceInt, itemPriceInt, itemAmountAddedInt;
+        String itemTotalAmountPrice = "";
+        int itemTotalPriceInt, itemPriceInt, itemAmountAddedInt;
 
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         String timestamp = simpleDateFormat.format(new Date());
@@ -103,21 +95,13 @@ public class ItemDetailsActivity extends AppCompatActivity {
         map.put("name", itemName);
         map.put("amount", itemDetailsAmount);
         map.put("description", itemDescription);
+        map.put("timestamp", timestamp);
         ref.child(userId).child(timestamp).setValue(map);
 
 
         //Send amount of items in cart to main menu activity
-        amountAdded = itemDetailsAmount;
-        try {
-            amountAddedInt = Integer.parseInt(amountAdded);
-            totalAmount = amountAddedInt + amountInCart;
-            amountAdded = String.valueOf(totalAmount);
-        } catch(NumberFormatException nfe){
-            System.out.println("Could not parse string " + nfe);
-        }
 
         Intent intent = new Intent(ItemDetailsActivity.this, MenuPageActivity.class);
-        intent.putExtra("amountItemsAdded", amountAdded);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

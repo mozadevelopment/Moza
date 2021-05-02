@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,8 +36,7 @@ public class CartActivity extends AppCompatActivity {
     private TextView textViewTotalAmount;
     private DatabaseReference cartListRef;
     private ArrayList<CartHelperClass> arrayListMenu;
-    private CardView cartItemCardView;
-    private String userId, editItem, deleteItem, cartEdit, itemId;
+    private String userId, itemId, timestamp;
 
     private CartRecyclerViewAdapter recyclerAdapter;
 
@@ -54,9 +55,6 @@ public class CartActivity extends AppCompatActivity {
         checkoutButton = findViewById(R.id.buttonCheckout);
         addMoreButton = findViewById(R.id.buttonGoBackToMenu);
         textViewTotalAmount = findViewById(R.id.textViewOrderAmount);
-        editItem = getString(R.string.edit_item);
-        deleteItem = getString(R.string.delete_item);
-        cartEdit = getString(R.string.edit_cart);
 
         //Firebase
         cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
@@ -89,7 +87,7 @@ public class CartActivity extends AppCompatActivity {
                 tvItemDescription = itemView.findViewById(R.id.cartItemDescription);
                 tvItemPrice = itemView.findViewById(R.id.cartItemPrice);
                 tvItemAmount = itemView.findViewById(R.id.cartItemAmount);
-                itemCardView = itemView.findViewById(R.id.itemCardView);
+                itemCardView = itemView.findViewById(R.id.cartItemCardView);
             }
         }
 
@@ -106,13 +104,41 @@ public class CartActivity extends AppCompatActivity {
             holder.tvItemAmount.setText(itemList.get(position).getItemAmount());
             holder.tvItemDescription.setText(itemList.get(position).getItemDescription());
             holder.tvItemPrice.setText(itemList.get(position).getItemPrice());
+            timestamp = itemList.get(position).getTimestamp();
+
+            //Edit item in cart
+            holder.itemCardView.setOnClickListener(v -> {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+                builder.setCancelable(false);
+                builder.setTitle(R.string.edit_cart);
+                builder.setMessage(R.string.confirm_delete_item_cart_alert);
+
+                builder.setPositiveButton(R.string.delete_item, (dialog, which) -> {
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId).child(timestamp);
+                    ref.removeValue()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(CartActivity.this, R.string.item_removed, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(CartActivity.this, MenuPageActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                });
+
+                builder.setNegativeButton(R.string.no_alert_button, (dialog, which) -> dialog.cancel());
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            });
         }
 
         @Override
         public int getItemCount() {
 
             return itemList.size();
-
         }
     }
 
@@ -132,6 +158,7 @@ public class CartActivity extends AppCompatActivity {
                     items.setItemPrice(dataSnapshot.child("price").getValue().toString());
                     items.setItemDescription(dataSnapshot.child("description").getValue().toString());
                     items.setItemId(dataSnapshot.child("itemId").getValue().toString());
+                    items.setTimestamp(dataSnapshot.child("timestamp").getValue().toString());
 
                     arrayListMenu.add(items);
                 }
