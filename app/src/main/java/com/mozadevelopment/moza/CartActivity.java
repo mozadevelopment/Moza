@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,11 +34,9 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Button checkoutButton, addMoreButton;
     private TextView textViewTotalAmount;
-    private DatabaseReference cartListRef;
     private ArrayList<CartHelperClass> arrayListMenu;
-    private CardView cartItemCardView;
-    private String userId, editItem, deleteItem, cartEdit, itemId;
-
+    private String userId, timestamp, totalPriceString;
+    private int totalPrice = 0;
     private CartRecyclerViewAdapter recyclerAdapter;
 
     @Override
@@ -54,18 +54,51 @@ public class CartActivity extends AppCompatActivity {
         checkoutButton = findViewById(R.id.buttonCheckout);
         addMoreButton = findViewById(R.id.buttonGoBackToMenu);
         textViewTotalAmount = findViewById(R.id.textViewOrderAmount);
-        editItem = getString(R.string.edit_item);
-        deleteItem = getString(R.string.delete_item);
-        cartEdit = getString(R.string.edit_cart);
 
-        //Firebase
-        cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        addMoreButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, MenuPageActivity.class)));
-        checkoutButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, CheckoutActivity.class)));
+        getDataFromFirebase();
 
-        GetDataFromFirebase();
+        addMoreButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, MenuPageActivity.class)));
+        checkoutButton.setOnClickListener(view -> {
+            Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+            intent.putExtra("totalPrice", totalPriceString);
+            startActivity(intent);
+        });
+    }
+
+    private void getDataFromFirebase() {
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId);
+
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    CartHelperClass items = new CartHelperClass();
+
+                    items.setItemName(dataSnapshot.child("name").getValue().toString());
+                    items.setItemAmount(dataSnapshot.child("amount").getValue().toString());
+                    items.setItemPrice(dataSnapshot.child("price").getValue().toString());
+                    items.setItemDescription(dataSnapshot.child("description").getValue().toString());
+                    items.setItemId(dataSnapshot.child("itemId").getValue().toString());
+                    items.setTimestamp(dataSnapshot.child("timestamp").getValue().toString());
+
+                    arrayListMenu.add(items);
+                }
+
+                recyclerAdapter = new CartActivity.CartRecyclerViewAdapter(getApplicationContext(), arrayListMenu);
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
@@ -89,7 +122,7 @@ public class CartActivity extends AppCompatActivity {
                 tvItemDescription = itemView.findViewById(R.id.cartItemDescription);
                 tvItemPrice = itemView.findViewById(R.id.cartItemPrice);
                 tvItemAmount = itemView.findViewById(R.id.cartItemAmount);
-                itemCardView = itemView.findViewById(R.id.itemCardView);
+                itemCardView = itemView.findViewById(R.id.cartItemCardView);
             }
         }
 
@@ -105,49 +138,51 @@ public class CartActivity extends AppCompatActivity {
             holder.tvItemName.setText(itemList.get(position).getItemName());
             holder.tvItemAmount.setText(itemList.get(position).getItemAmount());
             holder.tvItemDescription.setText(itemList.get(position).getItemDescription());
-            holder.tvItemPrice.setText(itemList.get(position).getItemPrice());
+
+            String itemPriceString = String.valueOf(itemList.get(position).getItemPrice());
+            holder.tvItemPrice.setText("$" + itemPriceString);
+
+            //Calculate total price
+
+            totalPrice = totalPrice + (Integer.parseInt(itemList.get(position).getItemPrice()));
+            totalPriceString = String.valueOf(totalPrice);
+            textViewTotalAmount.setText("$" + totalPriceString);
+
+            //Edit item in cart
+            holder.itemCardView.setOnClickListener(v -> {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+                builder.setCancelable(false);
+                builder.setTitle(R.string.edit_cart);
+                builder.setMessage(R.string.confirm_delete_item_cart_alert);
+
+                builder.setPositiveButton(R.string.delete_item, (dialog, which) -> {
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    timestamp = itemList.get(position).getTimestamp();
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId).child(timestamp);
+                    ref.removeValue()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(CartActivity.this, R.string.item_removed, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(CartActivity.this, MenuPageActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                });
+
+                builder.setNegativeButton(R.string.no_alert_button, (dialog, which) -> dialog.cancel());
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            });
         }
 
         @Override
         public int getItemCount() {
 
             return itemList.size();
-
         }
     }
-
-    private void GetDataFromFirebase() {
-
-        Query query = cartListRef.child(userId);
-
-        query.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    CartHelperClass items = new CartHelperClass();
-
-                    items.setItemName(dataSnapshot.child("name").getValue().toString());
-                    items.setItemAmount(dataSnapshot.child("amount").getValue().toString());
-                    items.setItemPrice(dataSnapshot.child("price").getValue().toString());
-                    items.setItemDescription(dataSnapshot.child("description").getValue().toString());
-                    items.setItemId(dataSnapshot.child("itemId").getValue().toString());
-
-                    arrayListMenu.add(items);
-                }
-
-                recyclerAdapter = new CartActivity.CartRecyclerViewAdapter(getApplicationContext(), arrayListMenu);
-                recyclerView.setAdapter(recyclerAdapter);
-                recyclerAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
 }

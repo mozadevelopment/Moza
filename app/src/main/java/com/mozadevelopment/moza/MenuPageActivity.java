@@ -35,10 +35,7 @@ public class MenuPageActivity extends AppCompatActivity {
     private DatabaseReference itemsDatabaseReference;
     private Button openCartButton;
     private ArrayList<MenuHelperClass> arrayListMenu;
-    private String amountAdded;
     private ItemRecyclerViewAdapter recyclerAdapter;
-    int amountAddedInt, itemsInCart = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,28 +50,35 @@ public class MenuPageActivity extends AppCompatActivity {
 
         arrayListMenu = new ArrayList<>();
 
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         //Cart button visibility
 
-        amountAdded = getIntent().getStringExtra("amountItemsAdded");
+        openCartButton = findViewById(R.id.buttonOpenCart);
 
-        try {
-            amountAddedInt = Integer.parseInt(amountAdded);
-            itemsInCart = amountAddedInt;
-        } catch(NumberFormatException nfe){
-            System.out.println("Could not parse string " + nfe);
-        }
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        mDatabaseRef.child("Cart List").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long count= dataSnapshot.getChildrenCount();
+
+                if (count > 0) {
+                    openCartButton.setVisibility(View.VISIBLE);
+                } else {
+                    openCartButton.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         ClearAll();
         GetDataFromFirebase();
 
-        openCartButton = findViewById(R.id.buttonOpenCart);
-        if (itemsInCart > 0) {
-            openCartButton.setVisibility(View.VISIBLE);
-        } else {
-            openCartButton.setVisibility(View.INVISIBLE);
-        }
-
-        openCartButton.setOnClickListener(view -> startActivity(new Intent(MenuPageActivity.this, CartActivity.class)));
+        openCartButton.setOnClickListener(v -> startActivity(new Intent(MenuPageActivity.this, CartActivity.class)));
     }
 
     public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
@@ -119,6 +123,7 @@ public class MenuPageActivity extends AppCompatActivity {
             Glide.with(mContext)
                     .load(itemList.get(position).getImageUrl())
                     .into(holder.itemImage);
+
             holder.itemCardView.setOnClickListener(v -> {
                 Intent intent = new Intent(MenuPageActivity.this, ItemDetailsActivity.class);
                 intent.putExtra("itemUrl", itemList.get(position).getImageUrl());
@@ -126,7 +131,6 @@ public class MenuPageActivity extends AppCompatActivity {
                 intent.putExtra("itemDescription", itemList.get(position).getDescription());
                 intent.putExtra("itemPrice", itemList.get(position).getPrice());
                 intent.putExtra("itemId", itemList.get(position).getItemId());
-                intent.putExtra("itemsInCart", itemsInCart);
                 startActivity(intent);
             });
         }

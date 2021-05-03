@@ -64,4 +64,11 @@ public class CartHelperClass {
         this.itemPrice = itemPrice;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 }

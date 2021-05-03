@@ -78,11 +78,14 @@
     <string name="address_example">Street, Number, Apartment, Neighborhood</string>
     <string name="edit_item">Edit</string>
     <string name="delete_item">Delete</string>
-    <string name="edit_cart">Edit cart options: </string>
     <string name="passwordWrongToast">Current password is wrong</string>
     <string name="passwordUpdateFailedToast">Password update failed</string>
     <string name="passwordUpdatedToast">Password updated</string>
     <string name="changeSavedToast">The changes have been saved</string>
     <string name="uploadingToast">Uploading</string>
     <string name="imageChangedToast">Image has been changed</string>
+    <string name="edit_cart">Delete item from cart </string>
+    <string name="confirm_delete_item_cart_alert">Are you sure you want to delete this item?</string>
+    <string name="item_removed">Item removed successfully</string>
+    <string name="order_status">In Progress</string>
 </resources>

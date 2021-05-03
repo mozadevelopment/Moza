@@ -83,4 +83,7 @@
     <string name="changeSavedToast">Los cambios han sido guardados</string>
     <string name="uploadingToast">Subiendo imagen</string>
     <string name="imageChangedToast">La imagen ha sido cambiada</string>
+    <string name="confirm_delete_item_cart_alert">¿Seguro quiere borrar este producto de su carrito?</string>
+    <string name="item_removed">Producto borrado correctamente.</string>
+    <string name="order_status">En progreso</string>
 </resources>
