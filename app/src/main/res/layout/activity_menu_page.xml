@@ -31,14 +31,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMenuPage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rvMenuPage"/>
+            android:layout_height="wrap_content" />
     </ScrollView>
 
     <View
