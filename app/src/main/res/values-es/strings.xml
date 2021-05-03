@@ -86,6 +86,8 @@
     <string name="confirm_delete_item_cart_alert">¿Seguro quiere borrar este producto de su carrito?</string>
     <string name="item_removed">Producto borrado correctamente.</string>
     <string name="order_status">En progreso</string>
-    <string name="rongQrCodeToast">Código QR incorrecto</string>
-    <string name="ordeHasBeenSentToast">Su pedido ha sido enviado</string>
+    <string name="wrongQrCodeToast">Código QR incorrecto</string>
+    <string name="addressNeededToast">Ingrese su direccion</string>
+    <string name="paymentNeededToast">Seleccione un metodo de pago</string>
+    <string name="orderHasBeenSentToast">Su pedido ha sido enviado</string>
 </resources>

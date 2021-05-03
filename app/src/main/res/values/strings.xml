@@ -88,6 +88,8 @@
     <string name="confirm_delete_item_cart_alert">Are you sure you want to delete this item?</string>
     <string name="item_removed">Item removed successfully</string>
     <string name="order_status">In Progress</string>
-    <string name="rongQrCodeToast">Wrong QR code</string>
-    <string name="ordeHasBeenSentToast">Your order has been sent</string>
+    <string name="wrongQrCodeToast">Wrong QR code</string>
+    <string name="orderHasBeenSentToast">Your order has been sent</string>
+    <string name="addressNeededToast">Please input your address</string>
+    <string name="paymentNeededToast">Select a payment option</string>
 </resources>

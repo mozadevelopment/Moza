@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,7 +61,7 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), Class.forName(menuQR));
                     startActivity(intent);
                 } catch (ClassNotFoundException e) {
-                    Toast.makeText(getContext(), R.string.rongQrCodeToast, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.wrongQrCodeToast, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             } else if (result.getContents() == null) {

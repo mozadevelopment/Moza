@@ -59,6 +59,9 @@ public class CheckoutActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         arrayListMenu = new ArrayList<>();
 
+        etCheckoutAnnotation = findViewById(R.id.editTextCheckoutAnnotation);
+        etCheckoutAddress = findViewById(R.id.editTextAddress);
+
         textViewTotalAmount = findViewById(R.id.textViewCheckoutAmount);
         totalPrice = getIntent().getStringExtra("totalPrice");
         textViewTotalAmount.setText("$" + totalPrice);
@@ -67,13 +70,18 @@ public class CheckoutActivity extends AppCompatActivity {
         finishOrder.setOnClickListener(v -> {
 
             getCheckoutOptions();
-            addOrderToFirebase();
-            dropCartListFromFirebase();
 
-            Intent intent = new Intent(CheckoutActivity.this, MenuPageActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            Toast.makeText(getApplicationContext(), R.string.ordeHasBeenSentToast, Toast.LENGTH_SHORT).show();
+            if (!validateAddress() | !validatePaymentOption()) {
+                return;
+            } else {
+                addOrderToFirebase();
+                dropCartListFromFirebase();
+
+                Intent intent = new Intent(CheckoutActivity.this, MenuPageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), R.string.orderHasBeenSentToast, Toast.LENGTH_SHORT).show();
+            }
         });
 
         getDataFromFirebase();
@@ -84,12 +92,14 @@ public class CheckoutActivity extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.paymentButtons);
         int radioButtonId = radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = radioGroup.findViewById(radioButtonId);
-        selectedPaymentOption = radioButton.getText().toString();
+
+        if (!validatePaymentOption()) {
+            return;
+        } else {
+            selectedPaymentOption = radioButton.getText().toString();
+        }
 
         //Direccion y anotaciones para el restaurante
-
-        etCheckoutAnnotation = findViewById(R.id.editTextCheckoutAnnotation);
-        etCheckoutAddress = findViewById(R.id.editTextAddress);
 
         checkoutAddress = etCheckoutAddress.getText().toString().trim();
         checkoutAnnotation = etCheckoutAnnotation.getText().toString().trim();
@@ -228,4 +238,36 @@ public class CheckoutActivity extends AppCompatActivity {
             return itemList.size();
         }
     }
+
+    //Validar datos del checkout
+
+    private boolean validateAddress() {
+        String val = etCheckoutAddress.getText().toString().trim();
+        String addressNeededToast = getString(R.string.addressNeededToast);
+
+        if (val.isEmpty()){
+            etCheckoutAddress.setError(addressNeededToast);
+            return false;
+        } else {
+            etCheckoutAddress.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePaymentOption() {
+        RadioGroup radioGroup = findViewById(R.id.paymentButtons);
+        String paymentNeededToast = getString(R.string.paymentNeededToast);
+
+        if (radioGroup.getCheckedRadioButtonId() == -1){
+            Toast.makeText(getApplicationContext(), paymentNeededToast, Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+
 }
+

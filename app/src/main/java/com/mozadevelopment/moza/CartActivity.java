@@ -85,6 +85,10 @@ public class CartActivity extends AppCompatActivity {
                     items.setItemId(dataSnapshot.child("itemId").getValue().toString());
                     items.setTimestamp(dataSnapshot.child("timestamp").getValue().toString());
 
+                    totalPrice = totalPrice + (Integer.parseInt(dataSnapshot.child("price").getValue().toString()));
+                    totalPriceString = String.valueOf(totalPrice);
+                    textViewTotalAmount.setText("$" + totalPriceString);
+
                     arrayListMenu.add(items);
                 }
 
@@ -144,9 +148,6 @@ public class CartActivity extends AppCompatActivity {
 
             //Calculate total price
 
-            totalPrice = totalPrice + (Integer.parseInt(itemList.get(position).getItemPrice()));
-            totalPriceString = String.valueOf(totalPrice);
-            textViewTotalAmount.setText("$" + totalPriceString);
 
             //Edit item in cart
             holder.itemCardView.setOnClickListener(v -> {
