@@ -55,7 +55,16 @@ public class HomeFragment extends Fragment {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null)
             if (result.getContents() != null) {
-                textViewQr.setText(result.getContents());
+                // textViewQr.setText(result.getContents());
+                // com.mozadevelopment.moza.MenuPageActivity
+                String menuQR = (result.getContents());
+                try {
+                    Intent intent = new Intent(getActivity(), Class.forName(menuQR));
+                    startActivity(intent);
+                } catch (ClassNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.rongQrCodeToast, Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
             } else if (result.getContents() == null) {
                 Toast.makeText(getContext(), R.string.scanCanceledToast, Toast.LENGTH_SHORT).show();
             } else {
