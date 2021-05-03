@@ -34,10 +34,9 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Button checkoutButton, addMoreButton;
     private TextView textViewTotalAmount;
-    private DatabaseReference cartListRef;
     private ArrayList<CartHelperClass> arrayListMenu;
-    private String userId, itemId, timestamp;
-
+    private String userId, timestamp, totalPriceString;
+    private int totalPrice = 0;
     private CartRecyclerViewAdapter recyclerAdapter;
 
     @Override
@@ -56,14 +55,50 @@ public class CartActivity extends AppCompatActivity {
         addMoreButton = findViewById(R.id.buttonGoBackToMenu);
         textViewTotalAmount = findViewById(R.id.textViewOrderAmount);
 
-        //Firebase
-        cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        addMoreButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, MenuPageActivity.class)));
-        checkoutButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, CheckoutActivity.class)));
+        getDataFromFirebase();
 
-        GetDataFromFirebase();
+        addMoreButton.setOnClickListener(view -> startActivity(new Intent(CartActivity.this, MenuPageActivity.class)));
+        checkoutButton.setOnClickListener(view -> {
+            Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+            intent.putExtra("totalPrice", totalPriceString);
+            startActivity(intent);
+        });
+    }
+
+    private void getDataFromFirebase() {
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId);
+
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    CartHelperClass items = new CartHelperClass();
+
+                    items.setItemName(dataSnapshot.child("name").getValue().toString());
+                    items.setItemAmount(dataSnapshot.child("amount").getValue().toString());
+                    items.setItemPrice(dataSnapshot.child("price").getValue().toString());
+                    items.setItemDescription(dataSnapshot.child("description").getValue().toString());
+                    items.setItemId(dataSnapshot.child("itemId").getValue().toString());
+                    items.setTimestamp(dataSnapshot.child("timestamp").getValue().toString());
+
+                    arrayListMenu.add(items);
+                }
+
+                recyclerAdapter = new CartActivity.CartRecyclerViewAdapter(getApplicationContext(), arrayListMenu);
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
@@ -103,8 +138,15 @@ public class CartActivity extends AppCompatActivity {
             holder.tvItemName.setText(itemList.get(position).getItemName());
             holder.tvItemAmount.setText(itemList.get(position).getItemAmount());
             holder.tvItemDescription.setText(itemList.get(position).getItemDescription());
-            holder.tvItemPrice.setText(itemList.get(position).getItemPrice());
-            timestamp = itemList.get(position).getTimestamp();
+
+            String itemPriceString = String.valueOf(itemList.get(position).getItemPrice());
+            holder.tvItemPrice.setText("$" + itemPriceString);
+
+            //Calculate total price
+
+            totalPrice = totalPrice + (Integer.parseInt(itemList.get(position).getItemPrice()));
+            totalPriceString = String.valueOf(totalPrice);
+            textViewTotalAmount.setText("$" + totalPriceString);
 
             //Edit item in cart
             holder.itemCardView.setOnClickListener(v -> {
@@ -116,6 +158,8 @@ public class CartActivity extends AppCompatActivity {
 
                 builder.setPositiveButton(R.string.delete_item, (dialog, which) -> {
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    timestamp = itemList.get(position).getTimestamp();
+
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId).child(timestamp);
                     ref.removeValue()
                             .addOnCompleteListener(task -> {
@@ -141,40 +185,4 @@ public class CartActivity extends AppCompatActivity {
             return itemList.size();
         }
     }
-
-    private void GetDataFromFirebase() {
-
-        Query query = cartListRef.child(userId);
-
-        query.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    CartHelperClass items = new CartHelperClass();
-
-                    items.setItemName(dataSnapshot.child("name").getValue().toString());
-                    items.setItemAmount(dataSnapshot.child("amount").getValue().toString());
-                    items.setItemPrice(dataSnapshot.child("price").getValue().toString());
-                    items.setItemDescription(dataSnapshot.child("description").getValue().toString());
-                    items.setItemId(dataSnapshot.child("itemId").getValue().toString());
-                    items.setTimestamp(dataSnapshot.child("timestamp").getValue().toString());
-
-                    arrayListMenu.add(items);
-                }
-
-                recyclerAdapter = new CartActivity.CartRecyclerViewAdapter(getApplicationContext(), arrayListMenu);
-                recyclerView.setAdapter(recyclerAdapter);
-                recyclerAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
 }

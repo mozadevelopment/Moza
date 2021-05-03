@@ -35,9 +35,7 @@ public class MenuPageActivity extends AppCompatActivity {
     private DatabaseReference itemsDatabaseReference;
     private Button openCartButton;
     private ArrayList<MenuHelperClass> arrayListMenu;
-    private String amountAdded;
     private ItemRecyclerViewAdapter recyclerAdapter;
-    int amountAddedInt, itemsInCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +74,6 @@ public class MenuPageActivity extends AppCompatActivity {
 
             }
         });
-
 
         ClearAll();
         GetDataFromFirebase();

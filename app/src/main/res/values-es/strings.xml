@@ -79,4 +79,5 @@
     <string name="edit_cart">"Editar carrito: "</string>
     <string name="confirm_delete_item_cart_alert">¿Seguro quiere borrar este producto de su carrito?</string>
     <string name="item_removed">Producto borrado correctamente.</string>
+    <string name="order_status">En progreso</string>
 </resources>

@@ -26,7 +26,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
     Button addToCartButton, openCartButton;
     ElegantNumberButton amountButton;
     EditText etItemDetailsAnnotation;
-    String itemsInCart, itemImageUrl, itemName, itemPrice, itemDescription, itemId, itemDetailsAnnotation, itemDetailsAmount;
+    String itemImageUrl, itemName, itemPrice, itemDescription, itemId, itemDetailsAnnotation, itemDetailsAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         amountButton = findViewById(R.id.countItemsButton);
         addToCartButton = findViewById(R.id.buttonAddToCart);
 
-        openCartButton = findViewById(R.id.buttonOpenCart); //Menu activity button
+        openCartButton = findViewById(R.id.buttonOpenCart);
 
         itemImageUrl = getIntent().getStringExtra("itemURL");
         itemName = getIntent().getStringExtra("itemName");
@@ -77,7 +77,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         String timestamp = simpleDateFormat.format(new Date());
 
         itemDetailsAmount = amountButton.getNumber();
-        //Get total price for same item.
+        //Sumar todos los precios del mismo producto
         try {
             itemPriceInt = Integer.parseInt(itemPrice);
             itemAmountAddedInt = Integer.parseInt(itemDetailsAmount);
@@ -86,6 +86,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         } catch(NumberFormatException nfe){
             System.out.println("Could not parse string " + nfe);
         }
+
         itemDetailsAnnotation = etItemDetailsAnnotation.getText().toString().trim();
 
         HashMap<String, String> map = new HashMap<>();
@@ -97,9 +98,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
         map.put("description", itemDescription);
         map.put("timestamp", timestamp);
         ref.child(userId).child(timestamp).setValue(map);
-
-
-        //Send amount of items in cart to main menu activity
 
         Intent intent = new Intent(ItemDetailsActivity.this, MenuPageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
