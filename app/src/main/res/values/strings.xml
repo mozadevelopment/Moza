@@ -89,4 +89,5 @@
     <string name="item_removed">Item removed successfully</string>
     <string name="order_status">In Progress</string>
     <string name="rongQrCodeToast">Wrong QR code</string>
+    <string name="ordeHasBeenSentToast">Your order has been sent</string>
 </resources>

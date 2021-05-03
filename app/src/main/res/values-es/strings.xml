@@ -87,4 +87,5 @@
     <string name="item_removed">Producto borrado correctamente.</string>
     <string name="order_status">En progreso</string>
     <string name="rongQrCodeToast">Código QR incorrecto</string>
+    <string name="ordeHasBeenSentToast">Su pedido ha sido enviado</string>
 </resources>

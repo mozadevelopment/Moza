@@ -73,6 +73,7 @@ public class CheckoutActivity extends AppCompatActivity {
             Intent intent = new Intent(CheckoutActivity.this, MenuPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            Toast.makeText(getApplicationContext(), R.string.ordeHasBeenSentToast, Toast.LENGTH_SHORT).show();
         });
 
         getDataFromFirebase();
