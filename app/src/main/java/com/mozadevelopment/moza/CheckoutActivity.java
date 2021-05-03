@@ -156,12 +156,11 @@ public class CheckoutActivity extends AppCompatActivity {
                     mapItems.put("amount", dataSnapshot.child("amount").getValue().toString());
                     mapItems.put("price", dataSnapshot.child("price").getValue().toString());
                     mapItems.put("itemId", dataSnapshot.child("itemId").getValue().toString());
-                    mapItems.put("timestamp", dataSnapshot.child("timestamp").getValue().toString());
                     mapItems.put("annotation", dataSnapshot.child("annotation").getValue().toString());
 
                     String itemTimestamp = dataSnapshot.child("timestamp").getValue().toString();
+                    mapItems.put("timestamp", itemTimestamp);
                     ref.child(userId).child(timestamp).child("Items").child(itemTimestamp).setValue(mapItems);
-
                 }
             }
 
@@ -170,8 +169,6 @@ public class CheckoutActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         HashMap<String, String> map = new HashMap<>();
         map.put("userId", userId);
@@ -183,7 +180,6 @@ public class CheckoutActivity extends AppCompatActivity {
         map.put("orderStatus", orderStatus);
         ref.child(userId).child(timestamp).setValue(map);
     }
-
 
     //Agregar items del pedido al Recycler View
 

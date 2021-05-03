@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mozadevelopment.moza.Database.MenuHelperClass;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MenuPageActivity extends AppCompatActivity {
 
@@ -36,6 +37,9 @@ public class MenuPageActivity extends AppCompatActivity {
     private Button openCartButton;
     private ArrayList<MenuHelperClass> arrayListMenu;
     private ItemRecyclerViewAdapter recyclerAdapter;
+    boolean isCartListEmpty = true;
+
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class MenuPageActivity extends AppCompatActivity {
 
         arrayListMenu = new ArrayList<>();
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //Cart button visibility
 
@@ -64,6 +68,7 @@ public class MenuPageActivity extends AppCompatActivity {
 
                 if (count > 0) {
                     openCartButton.setVisibility(View.VISIBLE);
+                    isCartListEmpty = false;
                 } else {
                     openCartButton.setVisibility(View.INVISIBLE);
                 }
@@ -191,21 +196,26 @@ public class MenuPageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setTitle(R.string.delete_cart_list_alert);
-        builder.setMessage(R.string.confirm_delete_cart_alert);
+        if (isCartListEmpty != true) {
 
-        builder.setPositiveButton(R.string.ok_alert_button, (dialog, which) -> {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId);
-            ref.removeValue();
+            AlertDialog.Builder builder = new AlertDialog.Builder(MenuPageActivity.this);
+                    builder.setCancelable(false);
+                    builder.setTitle(R.string.delete_cart_list_alert);
+                    builder.setMessage(R.string.confirm_delete_cart_alert);
+
+                    builder.setPositiveButton(R.string.ok_alert_button, (dialog, which) -> {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Cart List").child(userId);
+                        ref.removeValue();
+                        super.onBackPressed();
+                    });
+
+                    builder.setNegativeButton(R.string.no_alert_button, (dialog, which) -> dialog.cancel());
+
+            AlertDialog alert = builder.create();
+                    alert.show();
+        } else {
             super.onBackPressed();
-        });
+        }
 
-        builder.setNegativeButton(R.string.no_alert_button, (dialog, which) -> dialog.cancel());
-
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 }
