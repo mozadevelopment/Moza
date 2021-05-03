@@ -79,4 +79,10 @@
     <string name="edit_item">Edit</string>
     <string name="delete_item">Delete</string>
     <string name="edit_cart">Edit cart options: </string>
+    <string name="passwordWrongToast">Current password is wrong</string>
+    <string name="passwordUpdateFailedToast">Password update failed</string>
+    <string name="passwordUpdatedToast">Password updated</string>
+    <string name="changeSavedToast">The changes have been saved</string>
+    <string name="uploadingToast">Uploading</string>
+    <string name="imageChangedToast">Image has been changed</string>
 </resources>

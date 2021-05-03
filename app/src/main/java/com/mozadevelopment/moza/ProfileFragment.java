@@ -164,8 +164,9 @@ public class ProfileFragment extends Fragment {
 
     private void uploadImage() {
         final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Uploading");
+        pd.setMessage(getString(R.string.uploadingToast));
         pd.show();
+
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child(uid + "/profile.jpg");
             uploadTask = fileReference.putFile(imageUri);
@@ -176,6 +177,7 @@ public class ProfileFragment extends Fragment {
                 return fileReference.getDownloadUrl();
             }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
                 if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), R.string.imageChangedToast, Toast.LENGTH_SHORT).show();
                     Uri downloadUri = task.getResult();
                     String mUri = downloadUri.toString();
 
@@ -215,6 +217,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void saveProfileSettings() {
+        Toast.makeText(getContext(), R.string.changeSavedToast, Toast.LENGTH_SHORT).show();
         final String first_name = firstName.getText().toString();
         final String profile_phone = profilePhone.getText().toString();
         final String full_phone_number = ccpProfile.getSelectedCountryCodeWithPlus() + profile_phone;
