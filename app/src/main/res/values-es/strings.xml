@@ -90,4 +90,6 @@
     <string name="addressNeededToast">Ingrese su direccion</string>
     <string name="paymentNeededToast">Seleccione un metodo de pago</string>
     <string name="orderHasBeenSentToast">Su pedido ha sido enviado</string>
+    <string name="time">Hora</string>
+    <string name="status">Estado</string>
 </resources>

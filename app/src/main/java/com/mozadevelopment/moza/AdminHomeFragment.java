@@ -1,64 +1,136 @@
 package com.mozadevelopment.moza;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminHomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.mozadevelopment.moza.Database.CartHelperClass;
+import com.mozadevelopment.moza.Database.OrderHelperClass;
+
+import java.util.ArrayList;
+
 public class AdminHomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AdminHomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminHomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminHomeFragment newInstance(String param1, String param2) {
-        AdminHomeFragment fragment = new AdminHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private ArrayList<OrderHelperClass> arrayListMenu;
+    private OrdersRecyclerViewAdapter recyclerAdapterOrders;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_admin_home, container, false);
+
+        recyclerView = rootView.findViewById(R.id.ordersRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        arrayListMenu = new ArrayList<>();
+
+        getDataFromFirebase();
+
+        return rootView;
+
+    }
+
+    private void getDataFromFirebase() {
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("Orders");
+
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot usersIdsSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot timestampIdsSnapshot : usersIdsSnapshot.getChildren()) {
+
+                        OrderHelperClass items = new OrderHelperClass();
+
+                        items.setTimestamp(timestampIdsSnapshot.child("timestamp").getValue().toString());
+                        items.setAddress(timestampIdsSnapshot.child("address").getValue().toString());
+                        items.setAnnotation(timestampIdsSnapshot.child("annotations").getValue().toString());
+                        items.setPayment(timestampIdsSnapshot.child("payment").getValue().toString());
+                        items.setPrice(timestampIdsSnapshot.child("orderTotalPrice").getValue().toString());
+                        items.setStatus(timestampIdsSnapshot.child("orderStatus").getValue().toString());
+
+                        arrayListMenu.add(items);
+                    }
+                }
+
+                recyclerAdapterOrders = new AdminHomeFragment.OrdersRecyclerViewAdapter(getContext(), arrayListMenu);
+                recyclerView.setAdapter(recyclerAdapterOrders);
+                recyclerAdapterOrders.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecyclerViewAdapter.ViewHolder> {
+
+        public Context mContext;
+        private ArrayList<OrderHelperClass> itemList;
+
+        public OrdersRecyclerViewAdapter(Context context, ArrayList<OrderHelperClass> itemList) {
+            this.mContext = context;
+            this.itemList = itemList;
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView tvOrderTime, tvOrderAddress, tvOrderPayment, tvOrderAnnotation, tvOrderPrice, tvOrderStatus;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvOrderTime = itemView.findViewById(R.id.orderTimestamp);
+                tvOrderAddress = itemView.findViewById(R.id.orderAddress);
+                tvOrderAnnotation = itemView.findViewById(R.id.orderAnnotations);
+                tvOrderPayment = itemView.findViewById(R.id.orderPayment);
+                tvOrderPrice = itemView.findViewById(R.id.orderPrice);
+                tvOrderStatus= itemView.findViewById(R.id.orderStatus);
+            }
+        }
+
+        @NonNull
+        @Override
+        public OrdersRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_layout, parent, false);
+            return new OrdersRecyclerViewAdapter.ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull OrdersRecyclerViewAdapter.ViewHolder holder, int position) {
+            holder.tvOrderTime.setText(itemList.get(position).getTimestamp());
+            holder.tvOrderAddress.setText(itemList.get(position).getAddress());
+            holder.tvOrderAnnotation.setText(itemList.get(position).getAnnotation());
+            holder.tvOrderPayment.setText(itemList.get(position).getPayment());
+            holder.tvOrderPrice.setText("$" + itemList.get(position).getPrice());
+            holder.tvOrderStatus.setText(itemList.get(position).getStatus());
+        }
+
+        @Override
+        public int getItemCount() {
+
+            return itemList.size();
+        }
     }
 }

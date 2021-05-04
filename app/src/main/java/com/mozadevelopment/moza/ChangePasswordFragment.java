@@ -32,8 +32,6 @@ public class ChangePasswordFragment extends Fragment {
     DatabaseReference mDatabase;
     FirebaseAuth firebaseAuth;
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -92,4 +92,6 @@
     <string name="orderHasBeenSentToast">Your order has been sent</string>
     <string name="addressNeededToast">Please input your address</string>
     <string name="paymentNeededToast">Select a payment option</string>
+    <string name="time">Time</string>
+    <string name="status">Status</string>
 </resources>
