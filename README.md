@@ -1,8 +1,4 @@
 //TODO 
-
-- CheckoutActivity 
--          - Validar datos.
--          - Hacer toast o pantalla de confirmacion de pedido
            
 - OrdersFragment
 
